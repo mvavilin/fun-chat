@@ -1,0 +1,4 @@
+cd fun-chat
+
+npm run format
+npm run lint:fix

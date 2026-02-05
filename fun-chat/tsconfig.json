@@ -32,7 +32,22 @@
     "noUncheckedSideEffectImports": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@api": ["api"],
+      "@api/*": ["api/*"],
+      "@components": ["components"],
+      "@components/*": ["components/*"],
+      "@pages": ["pages"],
+      "@pages/*": ["pages/*"],
+      "@state": ["state"],
+      "@state/*": ["state/*"],
+      "@types": ["types"],
+      "@utils": ["utils"],
+      "@utils/*": ["utils/*"]
+    }
   },
   "include": ["src"]
 }
