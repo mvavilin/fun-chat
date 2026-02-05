@@ -1,0 +1,103 @@
+// Шрифты
+$font-primary: 'Montserrat', sans-serif;
+
+// Размеры шрифтов
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 20px;
+$font-size-xl: 24px;
+
+// Отступы
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Радиусы
+$radius-xs: 2px;
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-full: 100%;
+
+// Основные цвета
+$color-primary: #1a73e8;
+$color-secondary: #fbbc05;
+$color-accent: #34a853;
+
+// Семантические цвета
+$color-success: #34a853;
+$color-warning: #fbbc05;
+$color-error: #ea4335;
+$color-info: #1a73e8;
+
+// Фон
+$color-background: #ffffff;
+$color-surface: #ffffff;
+$color-dark-surface: #202124;
+
+// Текст
+$color-text: #202124;
+$color-text-secondary: #5f6368;
+$color-text-disabled: #9aa0a6;
+$color-text-inverse: #ffffff;
+$color-dark-text: #e8eaed;
+
+// UI
+$color-border: #dadce0;
+$color-hover: #f8f9fa;
+$color-active: #e8f0fe;
+$color-focus-ring: #1a73e8;
+$color-overlay: rgba(0, 0, 0, 0.5);
+
+// Статусы
+$color-online: #34a853;
+$color-offline: #9aa0a6;
+$color-typing: #fbbc05;
+
+// Кнопки
+$color-btn-primary-bg: #1a73e8;
+$color-btn-primary-text: #ffffff;
+$color-btn-primary-hover: #0d62d9;
+$color-btn-primary-active: #0b56c4;
+$color-btn-primary-disabled: #9aa0a6;
+
+$color-btn-secondary-bg: #f1f3f4;
+$color-btn-secondary-text: #202124;
+$color-btn-secondary-hover: #e8eaed;
+$color-btn-secondary-active: #dadce0;
+$color-btn-secondary-disabled: #f1f3f4;
+
+$color-btn-danger-bg: #ea4335;
+$color-btn-danger-text: #ffffff;
+$color-btn-danger-hover: #d33426;
+$color-btn-danger-active: #ba2b1f;
+
+// Поля ввода
+$color-input-bg: #ffffff;
+$color-input-text: #202124;
+$color-input-border: #dadce0;
+$color-input-focus-border: #1a73e8;
+$color-input-placeholder: #9aa0a6;
+$color-input-error-border: #ea4335;
+
+// Скроллбар
+$color-scrollbar-track: #f1f3f4;
+$color-scrollbar-thumb: #dadce0;
+$color-scrollbar-thumb-hover: #9aa0a6;
+
+// Тени
+$shadow-small: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
+$shadow-focus: 0 0 0 3px rgba(26, 115, 232, 0.3);
+
+// Брейкпоинты
+$breakpoints: (
+  'mobile': 380px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'large': 1440px,
+);

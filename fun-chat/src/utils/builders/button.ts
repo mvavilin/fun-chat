@@ -9,6 +9,7 @@ export default class ButtonBuilder extends ElementBuilder {
     events,
     type = 'button',
     disabled,
+    children,
   }: ButtonBuilderOptions) {
     super({
       tag: 'button',
@@ -16,6 +17,7 @@ export default class ButtonBuilder extends ElementBuilder {
       classes: ['btn', ...classes],
       content: content,
       events: events,
+      children,
     });
 
     this.type = type;

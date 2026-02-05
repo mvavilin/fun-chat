@@ -21,7 +21,11 @@ export default class ElementBuilder {
     if (attributes) this.addAttribute(attributes);
     if (styles) this.addStyle(styles);
     if (events) this.addEvent(...events);
-    if (children) this.addChild(...children);
+    if (children) {
+      console.log(1);
+
+      this.addChild(...children);
+    }
   }
 
   public get id(): string {

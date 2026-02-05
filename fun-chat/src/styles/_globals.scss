@@ -1,0 +1,206 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-primary;
+  font-size: $font-size-md;
+  background-color: $color-background;
+  color: $color-text;
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  @include flex-container(column, stretch, stretch);
+}
+
+.btn {
+  @include button-styles(
+    $bg-color: $color-btn-primary-bg,
+    $text-color: $color-btn-primary-text,
+    $hover-bg: $color-btn-primary-hover,
+    $active-bg: $color-btn-primary-active,
+    $disabled-bg: $color-btn-primary-disabled
+  );
+
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  font-weight: 500;
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
+  min-height: 44px;
+
+  &.secondary {
+    @include button-styles(
+      $bg-color: $color-btn-secondary-bg,
+      $text-color: $color-btn-secondary-text,
+      $hover-bg: $color-btn-secondary-hover,
+      $active-bg: $color-btn-secondary-active,
+      $disabled-bg: $color-btn-secondary-disabled
+    );
+  }
+
+  &.danger {
+    @include button-styles(
+      $bg-color: $color-btn-danger-bg,
+      $text-color: $color-btn-danger-text,
+      $hover-bg: $color-btn-danger-hover,
+      $active-bg: $color-btn-danger-active,
+      $disabled-bg: lighten($color-btn-danger-bg, 30%)
+    );
+  }
+
+  &.small {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+    min-height: 36px;
+  }
+
+  &.large {
+    padding: $spacing-md $spacing-lg;
+    font-size: $font-size-lg;
+    min-height: 52px;
+  }
+}
+
+.input {
+  @include input-styles(
+    $bg-color: $color-input-bg,
+    $text-color: $color-input-text,
+    $border-color: $color-input-border,
+    $focus-border-color: $color-input-focus-border,
+    $placeholder-color: $color-input-placeholder,
+    $error-border-color: $color-input-error-border,
+    $padding: $spacing-md,
+    $border-radius: $radius-md
+  );
+
+  &.small {
+    padding: $spacing-sm;
+    font-size: $font-size-sm;
+  }
+
+  &.large {
+    padding: $spacing-lg;
+    font-size: $font-size-lg;
+  }
+
+  &.rounded {
+    border-radius: $radius-xl;
+  }
+}
+
+.flex {
+  @include flex-container;
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.gap-sm {
+    gap: $spacing-sm;
+  }
+
+  &.gap-md {
+    gap: $spacing-md;
+  }
+
+  &.gap-lg {
+    gap: $spacing-lg;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include respond-to('tablet') {
+    padding: 0 $spacing-lg;
+  }
+}
+
+input,
+textarea {
+  cursor: text;
+}
+
+.h1 {
+  @include heading-styles(1);
+}
+
+.h2 {
+  @include heading-styles(2, $color-primary);
+}
+
+.page-title {
+  @include heading-styles($level: 1, $color: $color-text, $weight: 700, $letter-spacing: -0.5px);
+  text-align: center;
+  margin-bottom: $spacing-xl;
+}
+
+.section-title {
+  @include heading-styles(2);
+  border-bottom: 2px solid $color-border;
+  padding-bottom: $spacing-sm;
+}
+
+.loading .spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+.with-icon {
+  @include flex-container(row, center, center);
+  gap: 8px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form {
+  @include flex-container(column);
+  gap: $spacing-md;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: $spacing-xl;
+  padding: $spacing-lg;
+  background: $color-surface;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
