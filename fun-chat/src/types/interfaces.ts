@@ -6,7 +6,7 @@ export interface EventOptions {
   options?: boolean | AddEventListenerOptions;
 }
 
-export interface ElementBuilderOptions {
+interface Element {
   tag?: keyof HTMLElementTagNameMap | undefined;
   id?: string | undefined;
   classes?: string[] | undefined;
@@ -16,6 +16,8 @@ export interface ElementBuilderOptions {
   events?: EventOptions[] | undefined;
   children?: ElementBuilder[] | undefined;
 }
+
+export type ElementBuilderOptions = Element;
 
 export interface ButtonBuilderOptions extends ElementBuilderOptions {
   type?: HTMLButtonElement['type'] | undefined;
@@ -28,3 +30,7 @@ export interface InputBuilderOptions extends ElementBuilderOptions {
   placeholder?: string | undefined;
   disabled?: boolean | undefined;
 }
+
+export type PageBuilderOptions = ElementBuilderOptions;
+
+export type PageComponentOptions = PageBuilderOptions;

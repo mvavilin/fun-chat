@@ -39,11 +39,14 @@
       "@api": ["api"],
       "@components": ["components"],
       "@pages": ["pages"],
+      "@pages/*": ["pages/*"],
       "@state": ["state"],
       "@types": ["types"],
       "@utils": ["utils"],
       "@utils/*": ["utils/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@constants": ["constants"],
+      "@constants/*": ["constants/*"]
     }
   },
   "include": ["src"]

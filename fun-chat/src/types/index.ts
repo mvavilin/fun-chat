@@ -3,6 +3,19 @@ import type {
   ElementBuilderOptions,
   ButtonBuilderOptions,
   InputBuilderOptions,
+  PageBuilderOptions,
+  PageComponentOptions,
 } from '@/types/interfaces';
 
-export type { EventOptions, ElementBuilderOptions, ButtonBuilderOptions, InputBuilderOptions };
+import type { Hash, Route } from '@/types/types';
+
+export type {
+  EventOptions,
+  ElementBuilderOptions,
+  ButtonBuilderOptions,
+  InputBuilderOptions,
+  PageBuilderOptions,
+  PageComponentOptions,
+};
+
+export type { Hash, Route };

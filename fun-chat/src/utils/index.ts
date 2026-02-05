@@ -1,3 +1,3 @@
-import { ElementBuilder, ButtonBuilder, InputBuilder } from '@utils/builders';
+import { ElementBuilder, ButtonBuilder, InputBuilder, PageBuilder } from '@utils/builders';
 
-export { ElementBuilder, ButtonBuilder, InputBuilder };
+export { ElementBuilder, ButtonBuilder, InputBuilder, PageBuilder };

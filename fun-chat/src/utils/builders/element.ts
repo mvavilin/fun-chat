@@ -12,7 +12,7 @@ export default class ElementBuilder {
     styles,
     events,
     children,
-  }: ElementBuilderOptions) {
+  }: ElementBuilderOptions = {}) {
     this.element = document.createElement(tag);
 
     if (id) this.id = id;
