@@ -1,12 +1,13 @@
 @use './_variables' as *;
 
-@mixin flex-container(
-  $direction: row,
+@use 'sass:color';
+@use 'sass:map';
+
+@mixin flex-container($direction: row,
   $justify: flex-start,
   $align: stretch,
   $wrap: nowrap,
-  $gap: 0
-) {
+  $gap: 0) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
@@ -15,14 +16,12 @@
   gap: $gap;
 }
 
-@mixin position(
-  $type: relative,
+@mixin position($type: relative,
   $top: auto,
   $right: auto,
   $bottom: auto,
   $left: auto,
-  $z-index: auto
-) {
+  $z-index: auto) {
   position: $type;
   top: $top;
   right: $right;
@@ -37,7 +36,9 @@
   @if $lines ==1 {
     white-space: nowrap;
     text-overflow: ellipsis;
-  } @else {
+  }
+
+  @else {
     display: -webkit-box;
     -webkit-line-clamp: $lines;
     -webkit-box-orient: vertical;
@@ -45,11 +46,13 @@
 }
 
 @mixin respond-to($breakpoint, $type: min) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media (#{$type}-width: map-get($breakpoints, $breakpoint)) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (#{$type}-width: map.get($breakpoints, $breakpoint)) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @media (#{$type}-width: $breakpoint) {
       @content;
     }
@@ -71,22 +74,20 @@
   }
 
   &:disabled {
-    background-color: $disabled-bg or lighten($bg-color, 30%);
+    background-color: $disabled-bg or color.adjust($bg-color, $lightness: 30%);
     cursor: not-allowed;
     opacity: 0.6;
   }
 }
 
-@mixin input-styles(
-  $bg-color: $color-input-bg,
+@mixin input-styles($bg-color: $color-input-bg,
   $text-color: $color-input-text,
   $border-color: $color-input-border,
   $focus-border-color: $color-input-focus-border,
   $placeholder-color: $color-input-placeholder,
-  $error-border-color: $color-input-error-border,
+  $invalid-border-color: $color-input-invalid-border,
   $padding: 0.75rem,
-  $border-radius: 0.5rem
-) {
+  $border-radius: 0.5rem) {
   width: 100%;
   padding: $padding;
   background-color: $bg-color;
@@ -109,29 +110,27 @@
   }
 
   &:disabled {
-    background-color: lighten($bg-color, 5%);
-    border-color: lighten($border-color, 10%);
+    background-color: color.adjust($bg-color, $lightness: 5%);
+    border-color: color.adjust($border-color, $lightness: 10%);
     cursor: not-allowed;
     opacity: 0.7;
   }
 
-  &.error {
-    border-color: $error-border-color;
+  &.invalid {
+    border-color: $invalid-border-color;
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba($error-border-color, 0.2);
+      box-shadow: 0 0 0 3px rgba($invalid-border-color, 0.2);
     }
   }
 }
 
-@mixin heading-styles(
-  $level: 1,
+@mixin heading-styles($level: 1,
   $color: $color-text,
   $weight: 600,
   $line-height: 1.2,
   $letter-spacing: normal,
-  $font-family: $font-primary
-) {
+  $font-family: $font-primary) {
   $sizes: (
     1: $font-size-xl,
     2: $font-size-lg,
@@ -141,39 +140,39 @@
     6: $font-size-xs,
   );
 
-  $mobile-sizes: (
-    1: $font-size-lg,
-    2: $font-size-md,
-    3: $font-size-sm,
-    4: $font-size-xs,
-    5: $font-size-xs,
-    6: $font-size-xs,
-  );
+$mobile-sizes: (
+  1: $font-size-lg,
+  2: $font-size-md,
+  3: $font-size-sm,
+  4: $font-size-xs,
+  5: $font-size-xs,
+  6: $font-size-xs,
+);
 
-  font-family: $font-family;
-  font-weight: $weight;
-  color: $color;
-  line-height: $line-height;
-  letter-spacing: $letter-spacing;
-  margin: 0 0 $spacing-md 0;
+font-family: $font-family;
+font-weight: $weight;
+color: $color;
+line-height: $line-height;
+letter-spacing: $letter-spacing;
+margin: 0 0 $spacing-md 0;
 
-  @if map-has-key($sizes, $level) {
-    font-size: map-get($sizes, $level);
-  } @else {
-    font-size: $font-size-md;
+@if map.has-key($sizes, $level) {
+  font-size: map.get($sizes, $level);
+}
+
+@else {
+  font-size: $font-size-md;
+}
+
+@include respond-to('mobile', 'max') {
+  @if map.has-key($mobile-sizes, $level) {
+    font-size: map.get($mobile-sizes, $level);
   }
+}
 
-  @include respond-to('mobile', 'max') {
-    @if map-has-key($mobile-sizes, $level) {
-      font-size: map-get($mobile-sizes, $level);
-    }
-
-    margin-bottom: $spacing-sm;
+@if $level <=3 {
+  @include respond-to('tablet') {
+    margin-bottom: $spacing-lg;
   }
-
-  @if $level <= 3 {
-    @include respond-to('tablet') {
-      margin-bottom: $spacing-lg;
-    }
-  }
+}
 }

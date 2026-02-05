@@ -31,7 +31,7 @@ $color-accent: #34a853;
 // Семантические цвета
 $color-success: #34a853;
 $color-warning: #fbbc05;
-$color-error: #ea4335;
+$color-invalid: #ea4335;
 $color-info: #1a73e8;
 
 // Фон
@@ -71,10 +71,10 @@ $color-btn-secondary-hover: #e8eaed;
 $color-btn-secondary-active: #dadce0;
 $color-btn-secondary-disabled: #f1f3f4;
 
-$color-btn-danger-bg: #ea4335;
-$color-btn-danger-text: #ffffff;
-$color-btn-danger-hover: #d33426;
-$color-btn-danger-active: #ba2b1f;
+$color-btn-invalid-bg: #ea4335;
+$color-btn-invalid-text: #ffffff;
+$color-btn-invalid-hover: #d33426;
+$color-btn-invalid-active: #ba2b1f;
 
 // Поля ввода
 $color-input-bg: #ffffff;
@@ -82,7 +82,7 @@ $color-input-text: #202124;
 $color-input-border: #dadce0;
 $color-input-focus-border: #1a73e8;
 $color-input-placeholder: #9aa0a6;
-$color-input-error-border: #ea4335;
+$color-input-invalid-border: #ea4335;
 
 // Скроллбар
 $color-scrollbar-track: #f1f3f4;

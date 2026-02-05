@@ -1,6 +1,9 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+@use 'sass:color';
+@use 'sass:map';
+
 * {
   margin: 0;
   padding: 0;
@@ -21,13 +24,11 @@ body {
 }
 
 .btn {
-  @include button-styles(
-    $bg-color: $color-btn-primary-bg,
+  @include button-styles($bg-color: $color-btn-primary-bg,
     $text-color: $color-btn-primary-text,
     $hover-bg: $color-btn-primary-hover,
     $active-bg: $color-btn-primary-active,
-    $disabled-bg: $color-btn-primary-disabled
-  );
+    $disabled-bg: $color-btn-primary-disabled );
 
   padding: $spacing-sm $spacing-md;
   border-radius: $radius-md;
@@ -39,23 +40,19 @@ body {
   min-height: 44px;
 
   &.secondary {
-    @include button-styles(
-      $bg-color: $color-btn-secondary-bg,
+    @include button-styles($bg-color: $color-btn-secondary-bg,
       $text-color: $color-btn-secondary-text,
       $hover-bg: $color-btn-secondary-hover,
       $active-bg: $color-btn-secondary-active,
-      $disabled-bg: $color-btn-secondary-disabled
-    );
+      $disabled-bg: $color-btn-secondary-disabled );
   }
 
-  &.danger {
-    @include button-styles(
-      $bg-color: $color-btn-danger-bg,
-      $text-color: $color-btn-danger-text,
-      $hover-bg: $color-btn-danger-hover,
-      $active-bg: $color-btn-danger-active,
-      $disabled-bg: lighten($color-btn-danger-bg, 30%)
-    );
+  &.invalid {
+    @include button-styles($bg-color: $color-btn-invalid-bg,
+      $text-color: $color-btn-invalid-text,
+      $hover-bg: $color-btn-invalid-hover,
+      $active-bg: $color-btn-invalid-active,
+      $disabled-bg: color.adjust($color-btn-invalid-bg, $lightness: 30%));
   }
 
   &.small {
@@ -72,16 +69,14 @@ body {
 }
 
 .input {
-  @include input-styles(
-    $bg-color: $color-input-bg,
+  @include input-styles($bg-color: $color-input-bg,
     $text-color: $color-input-text,
     $border-color: $color-input-border,
     $focus-border-color: $color-input-focus-border,
     $placeholder-color: $color-input-placeholder,
-    $error-border-color: $color-input-error-border,
+    $invalid-border-color: $color-input-invalid-border,
     $padding: $spacing-md,
-    $border-radius: $radius-md
-  );
+    $border-radius: $radius-md );
 
   &.small {
     padding: $spacing-sm;
@@ -95,35 +90,6 @@ body {
 
   &.rounded {
     border-radius: $radius-xl;
-  }
-}
-
-.flex {
-  @include flex-container;
-
-  &.column {
-    flex-direction: column;
-  }
-
-  &.center {
-    justify-content: center;
-    align-items: center;
-  }
-
-  &.between {
-    justify-content: space-between;
-  }
-
-  &.gap-sm {
-    gap: $spacing-sm;
-  }
-
-  &.gap-md {
-    gap: $spacing-md;
-  }
-
-  &.gap-lg {
-    gap: $spacing-lg;
   }
 }
 
