@@ -1,0 +1,4 @@
+cd fun-chat
+
+npm run build
+npm run deploy

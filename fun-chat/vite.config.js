@@ -6,6 +6,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig({
+  base: '/mvavilin-JSFE2025Q3/',
+
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

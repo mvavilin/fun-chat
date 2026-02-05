@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "ci:format": "prettier --check .",
-    "prepare": "cd .. && husky fun-chat/.husky"
+    "prepare": "cd .. && husky fun-chat/.husky",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -19,6 +20,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-unicorn": "^62.0.0",
+    "gh-pages": "^6.3.0",
     "husky": "^9.1.7",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3",
