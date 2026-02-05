@@ -42,6 +42,7 @@
       "@state": ["state"],
       "@types": ["types"],
       "@utils": ["utils"],
+      "@utils/*": ["utils/*"],
       "@styles/*": ["styles/*"]
     }
   },
