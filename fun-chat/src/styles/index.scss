@@ -1,3 +1,7 @@
 @use './_variables';
 @use './_mixins';
 @use './_globals';
+
+@use '../pages/LoginPage/LoginPage.scss';
+
+@use '../components/LoginForm/LoginForm';

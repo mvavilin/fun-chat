@@ -5,6 +5,7 @@ export default class InputBuilder extends ElementBuilder {
   constructor({
     id,
     classes = [],
+    attributes = {},
     events,
     type = 'text',
     value,
@@ -15,6 +16,7 @@ export default class InputBuilder extends ElementBuilder {
       tag: 'input',
       id,
       classes: ['input', ...classes],
+      attributes,
       events: events,
     });
 

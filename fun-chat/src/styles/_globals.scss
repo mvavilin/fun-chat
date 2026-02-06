@@ -24,11 +24,13 @@ body {
 }
 
 .btn {
-  @include button-styles($bg-color: $color-btn-primary-bg,
+  @include button-styles(
+    $bg-color: $color-btn-primary-bg,
     $text-color: $color-btn-primary-text,
     $hover-bg: $color-btn-primary-hover,
     $active-bg: $color-btn-primary-active,
-    $disabled-bg: $color-btn-primary-disabled );
+    $disabled-bg: $color-btn-primary-disabled
+  );
 
   padding: $spacing-sm $spacing-md;
   border-radius: $radius-md;
@@ -40,19 +42,23 @@ body {
   min-height: 44px;
 
   &.secondary {
-    @include button-styles($bg-color: $color-btn-secondary-bg,
+    @include button-styles(
+      $bg-color: $color-btn-secondary-bg,
       $text-color: $color-btn-secondary-text,
       $hover-bg: $color-btn-secondary-hover,
       $active-bg: $color-btn-secondary-active,
-      $disabled-bg: $color-btn-secondary-disabled );
+      $disabled-bg: $color-btn-secondary-disabled
+    );
   }
 
   &.invalid {
-    @include button-styles($bg-color: $color-btn-invalid-bg,
+    @include button-styles(
+      $bg-color: $color-btn-invalid-bg,
       $text-color: $color-btn-invalid-text,
       $hover-bg: $color-btn-invalid-hover,
       $active-bg: $color-btn-invalid-active,
-      $disabled-bg: color.adjust($color-btn-invalid-bg, $lightness: 30%));
+      $disabled-bg: color.adjust($color-btn-invalid-bg, $lightness: 30%)
+    );
   }
 
   &.small {
@@ -69,14 +75,16 @@ body {
 }
 
 .input {
-  @include input-styles($bg-color: $color-input-bg,
+  @include input-styles(
+    $bg-color: $color-input-bg,
     $text-color: $color-input-text,
     $border-color: $color-input-border,
     $focus-border-color: $color-input-focus-border,
     $placeholder-color: $color-input-placeholder,
     $invalid-border-color: $color-input-invalid-border,
     $padding: $spacing-md,
-    $border-radius: $radius-md );
+    $border-radius: $radius-md
+  );
 
   &.small {
     padding: $spacing-sm;
@@ -120,7 +128,7 @@ textarea {
 .page-title {
   @include heading-styles($level: 1, $color: $color-text, $weight: 700, $letter-spacing: -0.5px);
   text-align: center;
-  margin-bottom: $spacing-xl;
+  // margin-bottom: $spacing-xl;
 }
 
 .section-title {

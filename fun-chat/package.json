@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
+    "format": "prettier --write . --log-level warn",
     "ci:format": "prettier --check .",
     "prepare": "cd .. && husky fun-chat/.husky",
     "deploy": "gh-pages -d dist"

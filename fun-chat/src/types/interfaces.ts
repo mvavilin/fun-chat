@@ -24,6 +24,8 @@ export interface ButtonBuilderOptions extends ElementBuilderOptions {
   disabled?: boolean | undefined;
 }
 
+export type ButtonComponentOptions = ButtonBuilderOptions;
+
 export interface InputBuilderOptions extends ElementBuilderOptions {
   type?: HTMLInputElement['type'] | undefined;
   value?: string | undefined;

@@ -3,12 +3,14 @@ import { LoginPage, HomePage, AboutPage } from '@pages';
 
 export const HASHES = {
   LOGIN: '#/login',
-  HOME: '#/home',
+  MAIN: '#/main',
   ABOUT: '#/about',
-} as const;
+};
+
+Object.freeze(HASHES);
 
 export const routes: Route[] = [
   { hash: HASHES.LOGIN, page: new LoginPage() },
-  { hash: HASHES.HOME, page: new HomePage() },
+  { hash: HASHES.MAIN, page: new HomePage() },
   { hash: HASHES.ABOUT, page: new AboutPage() },
 ];

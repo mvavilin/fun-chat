@@ -22,7 +22,7 @@ export default class Router {
   }
 
   private render(): void {
-    const hash = window.location.hash || HASHES.HOME;
+    const hash = window.location.hash || HASHES.MAIN;
     const route = this.routes.find((route) => route.hash === hash);
 
     const page = route ? route.page : new NotFoundPage();

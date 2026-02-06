@@ -1,0 +1,6 @@
+@use '../../styles/mixins' as *;
+
+.login-page {
+  min-height: 100vh;
+  @include flex-container(column, center, center);
+}

@@ -1,4 +1,6 @@
-const UI_TEXT = {
+import { capitalize } from '@utils';
+
+const UI_TEXTS = {
   APP: {
     NAME: 'Fun Chat',
     LOGO_ALT: 'Chat Logo',
@@ -7,14 +9,16 @@ const UI_TEXT = {
     GITHUB_LINK: 'https://github.com/mvavilin',
     GITHUB_TEXT: 'GitHub',
   },
+
   PAGES: {
-    AUTH: {
+    LOGIN: {
       TITLE: 'Authentication',
-      INPUT_PLACEHOLDER: 'Enter your name',
+      LOGIN_PLACEHOLDER: 'Enter your name',
+      PASSWORD_PLACEHOLDER: 'Enter your password',
       BUTTON: 'Sign In',
-      ERROR_EMPTY: 'Name cannot be empty',
+      ERROR_EMPTY: (field: string): string => `${capitalize(field)} cannot be empty`,
       ERROR_EXISTS: 'User already exists',
-      ERROR_INVALID: 'Invalid name format',
+      ERROR_INVALID: (field: string): string => `Invalid ${field} format`,
     },
     MAIN: {
       TITLE: 'Main Chat',
@@ -29,6 +33,7 @@ const UI_TEXT = {
     NOT_FOUND: '404 - Page not found',
     ERROR_LOADING: 'Failed to load page',
   },
+
   COMPONENTS: {
     HEADER: {
       WELCOME: 'Welcome,',
@@ -66,11 +71,13 @@ const UI_TEXT = {
         READ: 'Read',
       },
     },
+
     CONNECTION: {
       LOST: 'Connection lost. Reconnecting...',
       RESTORED: 'Connection restored',
       ERROR_RECONNECT: 'Reconnection failed',
     },
+
     ERRORS: {
       SERVER: 'Server error. Please try again.',
       NETWORK: 'Network error. Check your connection.',
@@ -107,4 +114,4 @@ const UI_TEXT = {
   },
 };
 
-export default UI_TEXT;
+export default UI_TEXTS;

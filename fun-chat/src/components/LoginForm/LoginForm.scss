@@ -1,0 +1,12 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.login-form {
+  max-width: $width-lg;
+  width: $width-full;
+  @include flex-container(column, stretch, stretch, wrap, $spacing-lg);
+
+  @include respond-to('tablet') {
+    max-width: $width-sm;
+  }
+}
