@@ -2,11 +2,20 @@
 @use '../../styles/mixins' as *;
 
 .login-form {
-  max-width: $width-lg;
+  max-width: $width-full;
   width: $width-full;
+  padding: $spacing-md;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
   @include flex-container(column, stretch, stretch, wrap, $spacing-lg);
+
+  @include respond-to('mobile') {
+    max-width: $width-lg;
+    padding: $spacing-lg;
+  }
 
   @include respond-to('tablet') {
     max-width: $width-sm;
+    padding: $spacing-lg;
   }
 }

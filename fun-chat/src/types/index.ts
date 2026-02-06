@@ -6,6 +6,8 @@ import type {
   InputBuilderOptions,
   PageBuilderOptions,
   PageComponentOptions,
+  FieldValidation,
+  FieldErrors,
 } from '@/types/interfaces';
 
 import type { Hash, Route } from '@/types/types';
@@ -18,6 +20,8 @@ export type {
   InputBuilderOptions,
   PageBuilderOptions,
   PageComponentOptions,
+  FieldValidation,
+  FieldErrors,
 };
 
 export type { Hash, Route };

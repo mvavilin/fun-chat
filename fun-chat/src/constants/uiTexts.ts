@@ -17,8 +17,11 @@ const UI_TEXTS = {
       PASSWORD_PLACEHOLDER: 'Enter your password',
       BUTTON: 'Sign In',
       ERROR_EMPTY: (field: string): string => `${capitalize(field)} cannot be empty`,
+      ERROR_LENGTH: (field: string, min: number, max: number): string =>
+        `${capitalize(field)} must be between ${min} and ${max} characters`,
+      ERROR_FORMAT: (field: string, description: string): string =>
+        `Invalid ${field} format, should match ${description}`,
       ERROR_EXISTS: 'User already exists',
-      ERROR_INVALID: (field: string): string => `Invalid ${field} format`,
     },
     MAIN: {
       TITLE: 'Main Chat',

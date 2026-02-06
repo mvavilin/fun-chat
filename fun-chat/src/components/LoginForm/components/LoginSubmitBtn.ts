@@ -8,6 +8,7 @@ export default class LoginSubmitBtn extends SubmitBtn {
       classes: [CSS_SELECTORS.BTN_PRIMARY, CSS_SELECTORS.LOGIN_FORM_SUBMIT],
       content: UI_TEXTS.PAGES.LOGIN.BUTTON,
       events: [{ type: 'click', handler }],
+      disabled: false,
     });
   }
 }

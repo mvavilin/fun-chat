@@ -26,7 +26,7 @@ export default class InputBuilder extends ElementBuilder {
     if (disabled) this.disabled = disabled;
   }
 
-  private getInput = (): HTMLInputElement | null => {
+  public getInput = (): HTMLInputElement | null => {
     const element = this.getElement();
     return element instanceof HTMLInputElement ? element : null;
   };
@@ -64,5 +64,20 @@ export default class InputBuilder extends ElementBuilder {
   public clear = (): void => {
     const input = this.getInput();
     if (input) input.value = '';
+  };
+
+  // TODO: Move methods to TextInput class ↓
+
+  public isEmpty = (): boolean => {
+    return this.value.length === 0;
+  };
+
+  public isValidByRegex = (pattern: RegExp): boolean => {
+    return pattern.test(this.value);
+  };
+
+  public hasLengthBetween = (min: number, max: number): boolean => {
+    const len = this.value.length;
+    return len >= min && len <= max;
   };
 }

@@ -1,12 +1,12 @@
-import { ElementBuilder, InputBuilder, ButtonBuilder } from '@utils';
+import { ElementBuilder } from '@utils';
 import { PageTitle } from '@components/ui';
 import { LoginInput, PasswordInput, LoginSubmitBtn } from '@components/LoginForm/components';
 import { UI_TEXTS, CSS_SELECTORS } from '@constants';
 
 export default class LoginForm extends ElementBuilder {
-  private loginInput: InputBuilder;
-  private passwordInput: InputBuilder;
-  private submitBtn: ButtonBuilder;
+  private loginInput: LoginInput;
+  private passwordInput: PasswordInput;
+  private submitBtn: LoginSubmitBtn;
   private title: ElementBuilder;
 
   constructor() {
@@ -30,6 +30,8 @@ export default class LoginForm extends ElementBuilder {
   private handleSubmit(): void {
     const login = this.loginInput.value;
     const password = this.passwordInput.value;
+
+    if (!this.loginInput.isValid() || !this.passwordInput.isValid()) return;
 
     console.log('Login:', login);
     console.log('Password:', password);

@@ -36,3 +36,16 @@ export interface InputBuilderOptions extends ElementBuilderOptions {
 export type PageBuilderOptions = ElementBuilderOptions;
 
 export type PageComponentOptions = PageBuilderOptions;
+
+export interface FieldValidation {
+  MIN_LENGTH?: number;
+  MAX_LENGTH?: number;
+  REGEX?: RegExp;
+  DESCRIPTION?: string;
+}
+
+export interface FieldErrors {
+  empty: (fieldId: string) => string;
+  length: (fieldId: string, min: number, max: number) => string;
+  format: (fieldId: string, description: string) => string;
+}
