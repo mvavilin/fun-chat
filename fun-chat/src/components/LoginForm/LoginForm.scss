@@ -6,7 +6,8 @@
   width: $width-full;
   padding: $spacing-md;
   border-radius: $radius-lg;
-  border: 1px solid $color-border;
+  background-color: $color-background;
+
   @include flex-container(column, stretch, stretch, wrap, $spacing-lg);
 
   @include respond-to('mobile') {

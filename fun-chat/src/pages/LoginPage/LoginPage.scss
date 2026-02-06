@@ -1,6 +1,13 @@
 @use '../../styles/mixins' as *;
+@use '../../styles/variables' as *;
 
 .login-page {
   min-height: 100vh;
+  background: $gradient-blue-subtle;
+
+  @include flex-container(column, center, center);
+}
+
+.login-page-container {
   @include flex-container(column, center, center);
 }
