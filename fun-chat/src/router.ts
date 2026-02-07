@@ -1,6 +1,6 @@
 import { HASHES, routes } from '@constants';
 import { NotFoundPage } from '@pages';
-import type { Hash, Route } from '@types';
+import type { Route } from '@types';
 
 export default class Router {
   private routes: Route[];
@@ -27,9 +27,5 @@ export default class Router {
 
     const page = route ? route.page : new NotFoundPage();
     this.container.replaceChildren(page.build());
-  }
-
-  public navigate(path: Hash): void {
-    window.location.hash = path;
   }
 }

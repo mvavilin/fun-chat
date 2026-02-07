@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -43,12 +44,15 @@
       "@pages": ["pages"],
       "@pages/*": ["pages/*"],
       "@state": ["state"],
+      "@state/*": ["state/*"],
       "@types": ["types"],
       "@utils": ["utils"],
       "@utils/*": ["utils/*"],
       "@constants": ["constants"],
       "@constants/*": ["constants/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@ws": ["ws"],
+      "@ws/*": ["ws/*"]
     }
   },
   "include": ["src"]

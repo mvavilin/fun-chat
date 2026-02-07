@@ -4,7 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   base: '/mvavilin-JSFE2025Q3/',
 
-  server: { open: true },
+  // server: { open: true },
 
   plugins: [tsconfigPaths()],
 });

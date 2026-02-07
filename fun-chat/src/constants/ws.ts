@@ -32,3 +32,21 @@ export const SERVER_ERRORS = {
   UNAUTHORIZED_REQUEST: 'the user was not authorized cannot be executed',
   INTERNAL_ERROR: 'internal server error',
 };
+
+export const WS_ERRORS = {
+  NOT_CONNECTED: 'WebSocket not connected',
+  NOT_INITIALIZED: 'WebSocket not initialized',
+  CONNECTION_FAILED: (url: string, error?: string) =>
+    `Connection to ${url} failed${error ? `: ${error}` : ''}`,
+  SEND_FAILED: 'Failed to send message',
+  TIMEOUT: (type: string, id: string) => `Request ${type} (${id}) timeout`,
+  DISCONNECTED: 'WebSocket disconnected',
+  INVALID_MESSAGE: 'Invalid WebSocket message',
+};
+
+export const WS_CONFIG = {
+  MAX_RECONNECT_ATTEMPTS: 5,
+  RECONNECT_DELAY_MS: 3000,
+  REQUEST_TIMEOUT_MS: 10000,
+  BASE_URL: 'ws://localhost:4000',
+};

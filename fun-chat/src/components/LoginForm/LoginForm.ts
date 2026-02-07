@@ -1,7 +1,7 @@
 import { ElementBuilder } from '@utils';
 import { PageTitle } from '@components/ui';
+import { UI_TEXTS } from '@constants';
 import { LoginInput, PasswordInput, LoginSubmitBtn } from '@components/LoginForm/components';
-import { UI_TEXTS, CSS_SELECTORS } from '@constants';
 
 export default class LoginForm extends ElementBuilder {
   private loginInput: LoginInput;
@@ -10,10 +10,7 @@ export default class LoginForm extends ElementBuilder {
   private title: ElementBuilder;
 
   constructor() {
-    super({
-      tag: 'form',
-      classes: [CSS_SELECTORS.LOGIN_FORM],
-    });
+    super({ tag: 'form', classes: ['login-form'] });
 
     this.title = new PageTitle(UI_TEXTS.PAGES.LOGIN.TITLE);
     this.loginInput = new LoginInput();
@@ -24,16 +21,13 @@ export default class LoginForm extends ElementBuilder {
   }
 
   private render(): void {
+    this.loginInput.value = 'Mikhail';
+    this.passwordInput.value = 'password123';
+
     this.addChild(this.title, this.loginInput, this.passwordInput, this.submitBtn);
   }
 
-  private handleSubmit(): void {
-    const login = this.loginInput.value;
-    const password = this.passwordInput.value;
-
+  private async handleSubmit(): Promise<void> {
     if (!this.loginInput.isValid() || !this.passwordInput.isValid()) return;
-
-    console.log('Login:', login);
-    console.log('Password:', password);
   }
 }

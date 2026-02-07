@@ -1,7 +1,7 @@
 import '@styles/index.scss';
 
-import { ElementBuilder } from '@utils';
 import Router from '@/router';
+import { ElementBuilder } from '@utils';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new ElementBuilder({ id: 'app' });
