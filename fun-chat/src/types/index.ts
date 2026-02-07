@@ -9,9 +9,6 @@ import type {
   FieldValidation,
   FieldErrors,
 } from '@/types/interfaces';
-
-import type { Hash, Route } from '@/types/types';
-
 export type {
   EventOptions,
   ElementBuilderOptions,
@@ -24,4 +21,11 @@ export type {
   FieldErrors,
 };
 
+import type { Hash, Route } from '@/types/types';
 export type { Hash, Route };
+
+import type { User } from '@/types/ws';
+export type { User };
+
+import type { HttpStatus, HttpMethod, ApiMethods } from '@/types/api';
+export type { HttpStatus, HttpMethod, ApiMethods };

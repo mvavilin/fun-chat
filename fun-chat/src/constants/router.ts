@@ -7,8 +7,6 @@ export const HASHES = {
   ABOUT: '#/about',
 };
 
-Object.freeze(HASHES);
-
 export const routes: Route[] = [
   { hash: HASHES.LOGIN, page: new LoginPage() },
   { hash: HASHES.MAIN, page: new HomePage() },

@@ -13,6 +13,4 @@ const VALIDATION = {
   },
 };
 
-Object.freeze(VALIDATION);
-
 export default VALIDATION;

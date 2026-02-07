@@ -33,6 +33,4 @@ const CSS_SELECTORS = {
   SPINNER: 'spinner',
 };
 
-Object.freeze(CSS_SELECTORS);
-
 export default CSS_SELECTORS;
