@@ -8,7 +8,7 @@ export const HASHES = {
 };
 
 export const routes: Route[] = [
-  { hash: HASHES.LOGIN, page: new LoginPage() },
-  { hash: HASHES.MAIN, page: new HomePage() },
-  { hash: HASHES.ABOUT, page: new AboutPage() },
+  { hash: HASHES.LOGIN, page: new LoginPage(), auth: false },
+  { hash: HASHES.MAIN, page: new HomePage(), auth: true },
+  { hash: HASHES.ABOUT, page: new AboutPage(), auth: null },
 ];

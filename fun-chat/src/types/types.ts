@@ -6,4 +6,5 @@ export type Hash = (typeof HASHES)[keyof typeof HASHES];
 export type Route = {
   hash: Hash;
   page: PageBuilder;
+  auth: boolean | null;
 };

@@ -7,5 +7,8 @@ export { WSClient };
 import { isFieldValid } from '@utils/validation';
 export { isFieldValid };
 
+import { findRouteByHash } from '@utils/routing';
+export { findRouteByHash };
+
 export const capitalize = (string: string): string =>
   string.charAt(0).toUpperCase() + string.slice(1);
