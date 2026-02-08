@@ -5,7 +5,8 @@ import type {
   ServerResponse,
   ServerRequestPayloads,
 } from '@types';
-import { WS_CONFIG, PAYLOAD_FIELDS, SERVER_EVENTS } from '@constants';
+import { WS_CONFIG, PAYLOAD_FIELDS, SERVER_EVENTS, WS_MESSAGES, NOTIFICATION } from '@constants';
+import { Notification } from '@components/ui';
 import { generateId } from '@utils';
 import { authState } from '@state';
 
@@ -31,13 +32,7 @@ export class WSClient {
   }
 
   public async connect(): Promise<void> {
-    if (this.isConnecting) {
-      // TODO: remove after testing
-      console.log('[WS] Already connecting...');
-      return;
-    }
-    // TODO: remove after testing
-    console.log('[WS] Connecting to', this.url);
+    if (this.isConnecting) return;
     this.isConnecting = true;
 
     this.ws = new WebSocket(this.url);
@@ -45,8 +40,8 @@ export class WSClient {
     this.ws.onopen = async () => {
       this.reconnectAttempts = 0;
       this.isConnecting = false;
-      // TODO: remove after testing
-      console.log('[WS] Connected');
+
+      new Notification(WS_MESSAGES.CONNECTED);
 
       await this.reAuth();
     };
@@ -54,29 +49,22 @@ export class WSClient {
     this.ws.onmessage = (event) => {
       try {
         const response: ServerResponse = JSON.parse(event.data);
-        // TODO: remove after testing
-        console.log('[WS] Message received:', response.type, response);
         this.notifySubscribers(response);
       } catch {
-        // console.error(WS_ERRORS.INVALID_MESSAGE, event.data);
-        // TODO: remove after testing
-        console.error('[WS] Invalid message received:', event.data);
+        new Notification(WS_MESSAGES.INVALID_MESSAGE, NOTIFICATION.TYPE.ERROR);
       }
     };
 
-    this.ws.onerror = (error) => {
+    this.ws.onerror = () => {
       this.isConnecting = false;
-      // console.error(WS_ERRORS.CONNECTION_FAILED(this.url, error.type));
-      // TODO: remove after testing
-      console.error('[WS] Connection error:', error);
     };
 
-    this.ws.onclose = (event) => {
+    this.ws.onclose = () => {
       this.isConnecting = false;
-      // TODO: remove after testing
-      console.warn(
-        `[WS] Connection closed (code: ${event.code}, reason: ${event.reason}). Attempting to reconnect...`
-      );
+
+      if (this.reconnectAttempts === 0)
+        new Notification(WS_MESSAGES.CONNECTION_CLOSED, NOTIFICATION.TYPE.WARNING);
+
       setTimeout(() => this.reconnect(), this.reconnectDelay);
     };
   }
@@ -86,11 +74,8 @@ export class WSClient {
 
     try {
       await this.request(SERVER_EVENTS.USER_LOGIN, { user: authState.user });
-      // TODO: remove after testing
-      console.log('[WS] Re-authenticated via sessionStorage');
-    } catch (error) {
-      // TODO: remove after testing
-      console.error('[WS] Re-auth failed:', error);
+      new Notification(WS_MESSAGES.REAUTH_SUCCESS, NOTIFICATION.TYPE.SUCCESS);
+    } catch {
       authState.clearUser();
     }
   }

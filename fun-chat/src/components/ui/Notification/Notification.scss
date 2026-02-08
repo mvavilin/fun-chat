@@ -1,0 +1,69 @@
+@use '../../../styles/variables' as *;
+
+.notification {
+  position: fixed;
+  bottom: $spacing-lg;
+  right: $spacing-lg;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  z-index: 1000;
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &--info {
+    background: $color-info;
+    color: $color-text-inverse;
+  }
+
+  &--error {
+    background: $color-invalid;
+    color: $color-text-inverse;
+  }
+
+  &--warning {
+    background: $color-warning;
+    color: $color-text;
+  }
+
+  &--success {
+    background: $color-success;
+    color: $color-text-inverse;
+  }
+
+  &__content {
+    flex: 1;
+    font-size: $font-size-sm;
+    line-height: 1.4;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: $font-size-lg;
+    cursor: pointer;
+    padding: $spacing-xs;
+    line-height: 1;
+    border-radius: $radius-xs;
+
+    &:hover {
+      background: none;
+    }
+
+    &:hover:not(:disabled) {
+      background: none;
+    }
+  }
+}

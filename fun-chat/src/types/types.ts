@@ -1,5 +1,5 @@
 import type { PageBuilder } from '@utils';
-import { HASHES } from '@constants';
+import { HASHES, NOTIFICATION } from '@constants';
 
 export type Hash = (typeof HASHES)[keyof typeof HASHES];
 
@@ -8,3 +8,5 @@ export type Route = {
   page: PageBuilder;
   auth: boolean | null;
 };
+
+export type NotificationType = (typeof NOTIFICATION.TYPE)[keyof typeof NOTIFICATION.TYPE];

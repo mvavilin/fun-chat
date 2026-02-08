@@ -1,8 +1,8 @@
-import { WSClient } from '@utils/ws';
-export { WSClient };
-
 import { ElementBuilder, ButtonBuilder, InputBuilder, PageBuilder } from '@utils/builders';
 export { ElementBuilder, ButtonBuilder, InputBuilder, PageBuilder };
+
+import { WSClient } from '@utils/ws';
+export { WSClient };
 
 import { isFieldValid } from '@utils/validation';
 export { isFieldValid };

@@ -21,8 +21,8 @@ export type {
   FieldErrors,
 };
 
-import type { Hash, Route } from '@/types/types';
-export type { Hash, Route };
+import type { Hash, Route, NotificationType } from '@/types/types';
+export type { Hash, Route, NotificationType };
 
 import type {
   User,

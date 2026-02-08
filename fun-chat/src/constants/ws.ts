@@ -33,15 +33,23 @@ export const SERVER_ERRORS = {
   INTERNAL_ERROR: 'internal server error',
 };
 
-export const WS_ERRORS = {
+export const WS_MESSAGES = {
   NOT_CONNECTED: 'WebSocket not connected',
   NOT_INITIALIZED: 'WebSocket not initialized',
-  CONNECTION_FAILED: (url: string, error?: string) =>
-    `Connection to ${url} failed${error ? `: ${error}` : ''}`,
   SEND_FAILED: 'Failed to send message',
-  TIMEOUT: (type: string, id: string) => `Request ${type} (${id}) timeout`,
   DISCONNECTED: 'WebSocket disconnected',
   INVALID_MESSAGE: 'Invalid WebSocket message',
+  CONNECTION_ERROR: 'Connection error',
+  CONNECTED: 'Connected',
+  CONNECTING: 'Connecting…',
+  CONNECTION_CLOSED: `Connection closed. Reconnecting…`,
+  CONNECTION_FAILED: (url: string, error?: string) =>
+    `Connection to ${url} failed${error ? `: ${error}` : ''}`,
+  TIMEOUT: (type: string, id: string) => `Request ${type} (${id}) timeout`,
+  AUTH_SUCCESS: 'Authentication successful',
+  AUTH_FAILED: 'Authentication failed',
+  REAUTH_SUCCESS: 'Re-authentication successful',
+  REAUTH_FAILED: 'Re-authentication failed',
 };
 
 export const WS_CONFIG = {
