@@ -7,6 +7,7 @@ import type {
 } from '@types';
 import { WS_CONFIG, PAYLOAD_FIELDS, SERVER_EVENTS } from '@constants';
 import { generateId } from '@utils';
+import { authState } from '@state';
 
 export class WSClient {
   private url: string;
@@ -41,11 +42,13 @@ export class WSClient {
 
     this.ws = new WebSocket(this.url);
 
-    this.ws.onopen = () => {
+    this.ws.onopen = async () => {
       this.reconnectAttempts = 0;
       this.isConnecting = false;
       // TODO: remove after testing
       console.log('[WS] Connected');
+
+      await this.reAuth();
     };
 
     this.ws.onmessage = (event) => {
@@ -76,6 +79,20 @@ export class WSClient {
       );
       setTimeout(() => this.reconnect(), this.reconnectDelay);
     };
+  }
+
+  public async reAuth(): Promise<void> {
+    if (authState.isAuth === false) return;
+
+    try {
+      await this.request(SERVER_EVENTS.USER_LOGIN, { user: authState.user });
+      // TODO: remove after testing
+      console.log('[WS] Re-authenticated via sessionStorage');
+    } catch (error) {
+      // TODO: remove after testing
+      console.error('[WS] Re-auth failed:', error);
+      authState.clearUser();
+    }
   }
 
   public send<T>(response: T): void {

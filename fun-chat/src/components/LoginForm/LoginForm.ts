@@ -28,7 +28,7 @@ export default class LoginForm extends ElementBuilder {
 
   private render(): void {
     // TODO: remove after testing
-    this.loginInput.value = 'Mikhail1';
+    this.loginInput.value = 'Mikhail';
     this.passwordInput.value = 'password123';
 
     this.addChild(this.title, this.loginInput, this.passwordInput, this.submitBtn);
