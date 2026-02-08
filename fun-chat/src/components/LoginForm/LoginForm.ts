@@ -1,11 +1,11 @@
 import { ElementBuilder, navigateTo } from '@utils';
-import { AuthService } from '@ws';
+import { authService, type AuthService } from '@ws';
 import { PageTitle } from '@components/ui';
 import { UI_TEXTS } from '@constants';
 import { LoginInput, PasswordInput, LoginSubmitBtn } from '@components/LoginForm/components';
 
 export default class LoginForm extends ElementBuilder {
-  private authService: AuthService = new AuthService();
+  private authService: AuthService = authService;
 
   private loginInput: LoginInput = new LoginInput();
   private passwordInput: PasswordInput = new PasswordInput();

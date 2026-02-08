@@ -1,0 +1,34 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.header {
+  background-color: $color-surface;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .container {
+    @include flex-container(row, space-between, center);
+  }
+}
+
+.app-title {
+  font-size: $font-size-lg;
+
+  @include heading-styles(2, $color-primary, 700);
+  margin: 0;
+}
+
+.user-info {
+  @include flex-container(row, flex-end, center);
+  gap: $spacing-md;
+}
+
+.user-name {
+  font-weight: 600;
+  color: $color-text;
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-sm;
+}

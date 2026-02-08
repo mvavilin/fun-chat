@@ -107,6 +107,8 @@ body {
   margin: 0 auto;
   padding: 0 $spacing-md;
 
+  @include flex-container();
+
   @include respond-to('tablet') {
     padding: 0 $spacing-lg;
   }

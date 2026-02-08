@@ -2,6 +2,16 @@
 @use './_mixins';
 @use './_globals';
 
-@use '../pages/LoginPage/LoginPage.scss';
+@use '../pages/LoginPage/LoginPage';
+@use '../pages/MainPage/MainPage';
 
 @use '../components/LoginForm/LoginForm';
+
+@use '../components/Header/Header';
+
+@use '../components/Main/Main';
+@use '../components/Sidebar/Sidebar';
+@use '../components/UserList/UserList';
+@use '../components/Chat/Chat';
+
+@use '../components/Footer/Footer';

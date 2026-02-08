@@ -1,0 +1,345 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+@use 'sass:color';
+@use 'sass:map';
+
+.chat {
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-small;
+  @include flex-container(column);
+}
+
+.chat-header {
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+  background-color: color.adjust($color-surface, $lightness: -2%);
+  @include flex-container(row, space-between, center);
+  flex-shrink: 0;
+}
+
+.recipient-info {
+  @include flex-container(row, flex-start, center);
+  gap: $spacing-sm;
+}
+
+.recipient-name {
+  @include heading-styles(3, $color-text, 600);
+  margin: 0;
+}
+
+.status-indicator {
+  font-size: $font-size-xs;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-full;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.online {
+    background-color: $color-online;
+    color: $color-text-inverse;
+  }
+
+  &.offline {
+    background-color: $color-offline;
+    color: $color-text-inverse;
+  }
+}
+
+.chat-actions {
+  @include flex-container(row, flex-end, center);
+  gap: $spacing-sm;
+}
+
+// История сообщений
+.messages-history {
+  flex: 1;
+  padding: $spacing-lg;
+  padding-top: 0;
+  overflow-y: auto;
+  @include flex-container(column);
+  gap: $spacing-md;
+  min-height: 300px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-scrollbar-track;
+    border-radius: $radius-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-scrollbar-thumb;
+    border-radius: $radius-full;
+
+    &:hover {
+      background: $color-scrollbar-thumb-hover;
+    }
+  }
+
+  &.empty {
+    @include flex-container(column, center, center);
+    color: $color-text-secondary;
+    font-size: $font-size-lg;
+    text-align: center;
+    padding: $spacing-xl;
+  }
+}
+
+.message-separator {
+  @include flex-container(row, center, center);
+  margin: $spacing-md 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: $color-border;
+    z-index: 1;
+  }
+
+  span {
+    background-color: $color-surface;
+    padding: 0 $spacing-md;
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+    z-index: 2;
+    position: relative;
+  }
+}
+
+.message {
+  max-width: 80%;
+  padding: $spacing-md;
+  border-radius: $radius-lg;
+  position: relative;
+  word-wrap: break-word;
+
+  &.sent {
+    align-self: flex-end;
+    background: linear-gradient(135deg, $color-blue-100, $color-blue-200);
+    border-bottom-right-radius: $radius-xs;
+  }
+
+  &.received {
+    align-self: flex-start;
+    background-color: $color-hover;
+    border-bottom-left-radius: $radius-xs;
+  }
+}
+
+.message-header {
+  @include flex-container(row, space-between, center);
+  margin-bottom: $spacing-xs;
+  font-size: $font-size-xs;
+}
+
+.message-sender {
+  font-weight: 600;
+  color: $color-text;
+}
+
+.message-time {
+  color: $color-text-secondary;
+}
+
+.message-content {
+  line-height: 1.5;
+  margin-bottom: $spacing-xs;
+}
+
+.message-status {
+  @include flex-container(row, flex-end, center);
+  gap: 4px;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.status-delivered {
+  color: $color-success;
+}
+
+.status-read {
+  color: $color-online;
+}
+
+.edited-badge {
+  color: $color-text-secondary;
+  font-style: italic;
+  font-size: $font-size-xs;
+}
+
+.message-actions {
+  @include flex-container(row, flex-end, center);
+  gap: $spacing-xs;
+  margin-top: $spacing-xs;
+}
+
+/* Поле ввода сообщений */
+.message-input-area {
+  padding: $spacing-lg;
+  border-top: 1px solid $color-border;
+  background-color: color.adjust($color-surface, $lightness: -2%);
+  @include flex-container(row, stretch, flex-end);
+  gap: $spacing-md;
+  flex-shrink: 0;
+
+  &:has(.input:disabled) {
+    opacity: 0.6;
+  }
+}
+
+.message-input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.message-input {
+  @include input-styles;
+  resize: none;
+  min-height: 60px;
+  max-height: 150px;
+  padding-right: 48px;
+
+  &:focus {
+    box-shadow: $shadow-focus;
+  }
+}
+
+.send-button {
+  align-self: flex-end;
+  height: 60px;
+  min-width: 100px;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+/* Адаптивные стили */
+@include respond-to('tablet', 'max') {
+  .main-content {
+    padding: $spacing-md 0;
+  }
+
+  .content-wrapper {
+    gap: $spacing-md;
+  }
+
+  .chat-component {
+    height: 60vh;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+
+  .message-input-area {
+    padding: $spacing-md;
+  }
+}
+
+@include respond-to('mobile', 'max') {
+  .header {
+    padding: $spacing-sm 0;
+  }
+
+  .user-info {
+    @include flex-container(column, center, flex-end);
+    gap: $spacing-xs;
+  }
+
+  .content-wrapper {
+    min-height: auto;
+  }
+
+  .sidebar {
+    max-height: 250px;
+  }
+
+  .chat-component {
+    height: 50vh;
+  }
+
+  .chat-header {
+    padding: $spacing-md;
+    @include flex-container(column, center, flex-start);
+    gap: $spacing-xs;
+  }
+
+  .recipient-info {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .message {
+    max-width: 95%;
+  }
+
+  .footer {
+    padding: $spacing-md 0;
+  }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.typing-indicator {
+  @include flex-container(row, flex-start, center);
+  gap: 4px;
+  padding: $spacing-md;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  font-style: italic;
+  animation: pulse 1.5s infinite;
+
+  span {
+    width: 4px;
+    height: 4px;
+    background-color: $color-typing;
+    border-radius: $radius-full;
+    animation: pulse 1.5s infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}

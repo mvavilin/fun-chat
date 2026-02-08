@@ -1,0 +1,23 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.sidebar {
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-small;
+  top: $spacing-xl;
+  @include flex-container(column);
+  height: 0;
+  min-height: 100%;
+
+  @include respond-to('tablet', 'max') {
+    position: static;
+    max-height: 300px;
+  }
+}
+
+.search-input {
+  margin-bottom: $spacing-lg;
+}

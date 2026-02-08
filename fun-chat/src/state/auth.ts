@@ -28,6 +28,10 @@ class AuthState {
   public get user(): User {
     return this._user;
   }
+
+  public get login(): string {
+    return this._user.login ? this._user.login : '';
+  }
 }
 
 export const authState = new AuthState();

@@ -1,0 +1,22 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.main-content {
+  flex: 1;
+  display: flex;
+  padding: $spacing-lg 0;
+  background-color: $color-background;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) 1fr;
+  gap: $spacing-lg;
+  min-height: 0;
+
+  @include respond-to('tablet', 'max') {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+}

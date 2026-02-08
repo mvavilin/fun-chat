@@ -1,2 +1,2 @@
-import { AuthService } from '@ws/auth';
-export { AuthService };
+import { authService, type AuthService } from '@ws/auth';
+export { authService, type AuthService };

@@ -1,7 +1,8 @@
 import type { User, ServerResponse } from '@types';
-import { SERVER_EVENTS, PAYLOAD_FIELDS } from '@constants';
+import { SERVER_EVENTS, PAYLOAD_FIELDS, HASHES } from '@constants';
 import { authState } from '@state';
 import { wsClient } from '@/wsClient';
+import { type ButtonBuilder, navigateTo } from '@utils';
 
 export class AuthService {
   async login(login: string, password: string): Promise<User | null> {
@@ -10,7 +11,7 @@ export class AuthService {
     });
 
     const user = PAYLOAD_FIELDS.USER in response.payload ? response.payload.user : null;
-    if (user === null) return null
+    if (user === null) return null;
 
     if (user.login && user.isLogined) authState.setUser(user.login, password, user.isLogined);
     return user;
@@ -26,7 +27,6 @@ export class AuthService {
 
   public onUserUpdate(callback: (user: User) => void): void {
     const handler = (response: ServerResponse): void => {
-
       const user = PAYLOAD_FIELDS.USER in response.payload ? response.payload.user : null;
       if (user === null) return;
 
@@ -37,3 +37,12 @@ export class AuthService {
     wsClient.subscribe(SERVER_EVENTS.USER_EXTERNAL_LOGOUT, handler);
   }
 }
+
+export const authService: AuthService = new AuthService();
+
+export const closeApp = async (button: ButtonBuilder): Promise<void> => {
+  button.disabled = true;
+  await authService.logout();
+  button.disabled = false;
+  navigateTo(HASHES.LOGIN);
+};
