@@ -12,3 +12,6 @@ export { Main, Sidebar, UserList, Chat };
 
 import Footer from '@components/Footer/Footer';
 export { Footer };
+
+import About from '@components/About/About';
+export { About };

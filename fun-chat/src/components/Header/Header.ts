@@ -1,6 +1,7 @@
 import { ElementBuilder, ButtonBuilder } from '@utils';
 import { authState } from '@state';
 import { closeApp } from '@ws/auth';
+import type { User } from '@types';
 
 export default class Header extends ElementBuilder {
   private container = new ElementBuilder({ classes: ['container'] });
@@ -8,32 +9,41 @@ export default class Header extends ElementBuilder {
   private userInfo = new ElementBuilder({ classes: ['user-info'] });
   private userName = new ElementBuilder({
     tag: 'p',
-    content: authState.login,
     classes: ['user-name'],
   });
-  private logoutBtn = new ButtonBuilder({
+  private logoutButton = new ButtonBuilder({
     content: 'Logout',
     classes: ['secondary', 'small'],
     events: [
       {
         type: 'click',
-        handler: async () => await closeApp(this.logoutBtn),
+        handler: async () => await closeApp(this.logoutButton),
       },
     ],
   });
 
   constructor() {
-    super({
-      tag: 'header',
-      classes: ['header'],
+    super({ tag: 'header', classes: ['header'] });
+
+    authState.subscribe((user) => {
+      this.render(user);
     });
 
-    this.render();
+    this.render(authState.user);
   }
 
-  private render(): void {
-    this.userInfo.addChild(this.userName, this.logoutBtn);
+  private render(user: User): void {
+    this.userInfo.clear();
+
+    if (user.isLogined && user.login) {
+      this.userName.content = user.login;
+      this.userInfo.addChild(this.userName, this.logoutButton);
+    }
+
+    this.container.clear();
     this.container.addChild(this.appTitle, this.userInfo);
+
+    this.clear();
     this.addChild(this.container);
   }
 }

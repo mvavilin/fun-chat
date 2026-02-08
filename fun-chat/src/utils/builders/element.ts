@@ -99,4 +99,8 @@ export default class ElementBuilder {
   public getOffsetWidth = (): number => this.element.offsetWidth;
 
   public getChildCount = (): number => this.element.childElementCount;
+
+  public clear = (): void => {
+    while (this.element.firstChild) this.element.removeChild(this.element.firstChild);
+  };
 }

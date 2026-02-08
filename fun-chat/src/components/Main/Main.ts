@@ -1,10 +1,9 @@
 import { ElementBuilder } from '@utils';
-import { Sidebar } from '@components';
-import { Chat } from '@components';
+import { Sidebar, Chat } from '@components';
 
 export default class Main extends ElementBuilder {
   private container = new ElementBuilder({ classes: ['container'] });
-  private contentWrapper = new ElementBuilder({ classes: ['content-wrapper'] });
+  private contentWrapper = new ElementBuilder({ classes: ['main-content-wrapper'] });
   private sidebar = new Sidebar();
   private chatComponent = new Chat();
 

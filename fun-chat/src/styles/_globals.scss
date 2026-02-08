@@ -130,7 +130,6 @@ textarea {
 .page-title {
   @include heading-styles($level: 1, $color: $color-text, $weight: 700, $letter-spacing: -0.5px);
   text-align: center;
-  // margin-bottom: $spacing-xl;
 }
 
 .section-title {
@@ -165,14 +164,6 @@ textarea {
   gap: $spacing-md;
   max-width: 500px;
   margin: 0 auto;
-}
-
-.section {
-  margin-bottom: $spacing-xl;
-  padding: $spacing-lg;
-  background: $color-surface;
-  border-radius: $radius-lg;
-  border: 1px solid $color-border;
 }
 
 @keyframes spin {

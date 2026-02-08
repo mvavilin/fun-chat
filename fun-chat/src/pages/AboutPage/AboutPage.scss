@@ -1,0 +1,15 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/variables' as *;
+
+.about-page {
+  min-height: 100vh;
+  background: $gradient-orange-subtle;
+
+  @include flex-container(column, center, center);
+}
+
+.about-page-container {
+  min-height: 100vh;
+
+  @include flex-container(column);
+}

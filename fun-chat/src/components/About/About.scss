@@ -1,0 +1,53 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.about-content {
+  flex: 1;
+  padding: $spacing-lg 0;
+  background-color: $color-background;
+  @include flex-container();
+}
+
+.page-content-wrapper {
+  flex: 1;
+  @include flex-container(row, center, center);
+}
+
+.about-box {
+  @include flex-container(column, center, center, nowrap, $spacing-sm);
+}
+
+.text {
+  text-align: justify;
+  font-size: $font-size-md;
+  line-height: 1.6;
+  color: $color-text-secondary;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.author-photo {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: $spacing-md auto;
+  border-radius: $width-md;
+}
+
+.author-link {
+  color: $color-primary;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $color-orange-500;
+    text-decoration: underline;
+  }
+}
+
+.author-text {
+  margin-top: $spacing-sm;
+}
