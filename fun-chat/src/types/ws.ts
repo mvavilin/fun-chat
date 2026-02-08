@@ -1,35 +1,28 @@
 import { SERVER_EVENTS, SERVER_ERRORS } from '@constants';
 
 export type ServerEventType = (typeof SERVER_EVENTS)[keyof typeof SERVER_EVENTS];
-type ServerErrorMessage = (typeof SERVER_ERRORS)[keyof typeof SERVER_ERRORS] | string;
+export type ServerErrorMessage = (typeof SERVER_ERRORS)[keyof typeof SERVER_ERRORS] | string;
 
-type WSRequest<TPayload = unknown> = {
+export type ServerRequest<TPayload> = {
   id: string | null;
   type: ServerEventType;
   payload: TPayload;
 };
 
-export type WSErrorResponse = {
-  id: string | null;
-  type: ServerEventType;
-  payload: {
-    error: ServerErrorMessage;
-  };
-};
-
 export type User = {
   login: string | null;
-  isLogined: boolean;
+  password?: string | null;
+  isLogined?: boolean;
 };
 
-type MessageStatus = {
+export type MessageStatus = {
   isDelivered?: boolean;
   isReaded?: boolean;
   isEdited?: boolean;
   isDeleted?: boolean;
 };
 
-type Message = {
+export type Message = {
   id: string;
   from: string;
   to: string;
@@ -38,32 +31,28 @@ type Message = {
   status: MessageStatus;
 };
 
-export type UserLoginRequest = WSRequest<{ user: { login: string; password: string } }>;
-export type UserLoginResponse = WSRequest<{ user: User }>;
+type UserLoginPayload = { user: User };
+type UserLogoutPayload = UserLoginPayload;
+type MsgSendPayload = { message: { to: string; text: string } };
+type MsgFromUserPayload = { user: { login: string } };
 
-export type UserLogoutRequest = UserLoginRequest;
-type UserLogoutResponse = UserLoginResponse;
+export type ServerRequestPayloads =
+  | UserLoginPayload
+  | UserLogoutPayload
+  | MsgSendPayload
+  | MsgFromUserPayload;
 
-type UserListResponse = WSRequest<{ users: User[] }>;
+type ServerErrorPayload = { error: ServerErrorMessage };
 
-export type MsgSendRequest = WSRequest<{ message: { to: string; text: string } }>;
-type MsgSendResponse = WSRequest<{ message: Message }>;
+export type ServerResponsePayloads =
+  | UserLoginPayload
+  | UserLogoutPayload
+  | { users: User[] }
+  | { message: Message }
+  | { messages: Message[] }
+  | { count: number }
+  | { message: { id: string; status: MessageStatus } }
+  | ServerErrorPayload;
 
-export type MsgFromUserRequest = WSRequest<{ user: { login: string } }>;
-type MsgFromUserResponse = WSRequest<{ messages: Message[] }>;
-
-type MsgUnreadCountResponse = WSRequest<{ count: number }>;
-
-type MsgStatusUpdateResponse = WSRequest<{ message: { id: string; status: MessageStatus } }>;
-
-export type ServerResponse =
-  | UserLoginResponse
-  | UserLogoutResponse
-  | UserListResponse
-  | MsgSendResponse
-  | MsgFromUserResponse
-  | MsgUnreadCountResponse
-  | MsgStatusUpdateResponse
-  | WSErrorResponse;
-
+export type ServerResponse = ServerRequest<ServerResponsePayloads>;
 export type ServerEventHandler = (data: ServerResponse) => void;

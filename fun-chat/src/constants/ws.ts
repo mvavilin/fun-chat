@@ -50,3 +50,12 @@ export const WS_CONFIG = {
   REQUEST_TIMEOUT_MS: 10000,
   BASE_URL: 'ws://localhost:4000',
 };
+
+export const PAYLOAD_FIELDS = {
+  USER: 'user',
+  ERROR: 'error',
+  USERS: 'users',
+  MESSAGES: 'messages',
+  COUNT: 'count',
+  MESSAGE: 'message',
+} as const;

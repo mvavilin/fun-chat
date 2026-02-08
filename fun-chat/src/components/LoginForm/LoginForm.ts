@@ -1,33 +1,47 @@
-import { ElementBuilder } from '@utils';
+import { ElementBuilder, navigateTo } from '@utils';
+import { AuthService } from '@ws';
 import { PageTitle } from '@components/ui';
 import { UI_TEXTS } from '@constants';
 import { LoginInput, PasswordInput, LoginSubmitBtn } from '@components/LoginForm/components';
 
 export default class LoginForm extends ElementBuilder {
-  private loginInput: LoginInput;
-  private passwordInput: PasswordInput;
-  private submitBtn: LoginSubmitBtn;
-  private title: ElementBuilder;
+  private authService: AuthService = new AuthService();
+
+  private loginInput: LoginInput = new LoginInput();
+  private passwordInput: PasswordInput = new PasswordInput();
+  private submitBtn: LoginSubmitBtn = new LoginSubmitBtn(() => this.handleSubmit());
+  private title: ElementBuilder = new PageTitle(UI_TEXTS.PAGES.LOGIN.TITLE);
 
   constructor() {
     super({ tag: 'form', classes: ['login-form'] });
 
-    this.title = new PageTitle(UI_TEXTS.PAGES.LOGIN.TITLE);
-    this.loginInput = new LoginInput();
-    this.passwordInput = new PasswordInput();
-    this.submitBtn = new LoginSubmitBtn(() => this.handleSubmit());
+    this.addEvent({
+      type: 'submit',
+      handler: (event) => {
+        event.preventDefault();
+        this.handleSubmit();
+      },
+    });
 
     this.render();
   }
 
   private render(): void {
-    this.loginInput.value = 'Mikhail';
+    // TODO: remove after testing
+    this.loginInput.value = 'Mikhail1';
     this.passwordInput.value = 'password123';
 
     this.addChild(this.title, this.loginInput, this.passwordInput, this.submitBtn);
   }
 
   private async handleSubmit(): Promise<void> {
+    const login = this.loginInput.value;
+    const password = this.passwordInput.value;
+
     if (!this.loginInput.isValid() || !this.passwordInput.isValid()) return;
+
+    await this.authService.login(login, password);
+
+    navigateTo();
   }
 }

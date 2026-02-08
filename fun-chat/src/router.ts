@@ -1,8 +1,8 @@
 import { HASHES, routes } from '@constants';
 import { NotFoundPage } from '@pages';
 import { authState } from '@state';
-import type { Route } from '@types';
-import { findRouteByHash } from '@utils';
+import type { Route, Hash } from '@types';
+import { findRouteByHash, navigateTo } from '@utils';
 
 export default class Router {
   private routes: Route[];
@@ -24,7 +24,7 @@ export default class Router {
   }
 
   private render(): void {
-    const hash = window.location.hash || HASHES.MAIN;
+    const hash = window.location.hash || HASHES.LOGIN;
     const route = this.resolveRoute(hash);
     const page = route ? route.page : new NotFoundPage();
     this.container.replaceChildren(page.build());
@@ -34,19 +34,14 @@ export default class Router {
     let route = findRouteByHash(this.routes, hash);
     if (route === undefined) return undefined;
 
-    let redirectHash: string | null = null;
+    let redirectHash: Hash | null = null;
 
-    switch (route.auth) {
-      case true:
-        if (!authState.isAuth) redirectHash = HASHES.LOGIN;
-        break;
-      case false:
-        if (authState.isAuth) redirectHash = HASHES.MAIN;
-        break;
-    }
+    if (route.auth === true && !authState.isAuth) redirectHash = HASHES.LOGIN;
+
+    if (route.auth === false && authState.isAuth) redirectHash = HASHES.MAIN;
 
     if (redirectHash) {
-      window.location.hash = redirectHash;
+      navigateTo(redirectHash);
       route = findRouteByHash(this.routes, redirectHash);
     }
 

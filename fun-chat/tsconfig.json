@@ -52,7 +52,9 @@
       "@constants/*": ["constants/*"],
       "@styles/*": ["styles/*"],
       "@ws": ["ws"],
-      "@ws/*": ["ws/*"]
+      "@ws/*": ["ws/*"],
+      "@services": ["services"],
+      "@services/*": ["services/*"]
     }
   },
   "include": ["src"]

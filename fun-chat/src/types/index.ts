@@ -26,21 +26,20 @@ export type { Hash, Route };
 
 import type {
   User,
-  ServerResponse,
-  UserLoginRequest,
-  UserLoginResponse,
-  WSErrorResponse,
   ServerEventHandler,
   ServerEventType,
+  ServerResponse,
+  ServerRequest,
+  ServerRequestPayloads,
 } from '@/types/ws';
+
 export type {
   User,
-  ServerResponse,
-  UserLoginRequest,
-  UserLoginResponse,
-  WSErrorResponse,
   ServerEventHandler,
   ServerEventType,
+  ServerResponse,
+  ServerRequest,
+  ServerRequestPayloads,
 };
 
 import type { HttpStatus, HttpMethod, ApiMethods } from '@/types/api';

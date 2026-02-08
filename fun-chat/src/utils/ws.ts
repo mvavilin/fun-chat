@@ -1,18 +1,22 @@
-import type { ServerEventType, ServerResponse, ServerEventHandler } from '@types';
-import { WS_CONFIG } from '@constants';
+import type {
+  ServerRequest,
+  ServerEventType,
+  ServerEventHandler,
+  ServerResponse,
+  ServerRequestPayloads,
+} from '@types';
+import { WS_CONFIG, PAYLOAD_FIELDS, SERVER_EVENTS } from '@constants';
+import { generateId } from '@utils';
 
 export class WSClient {
   private url: string;
-
   private ws: WebSocket | null = null;
-  private listeners: Map<ServerEventType, ServerEventHandler[]> = new Map<
-    ServerEventType,
-    ServerEventHandler[]
-  >();
+  private listeners: Map<ServerEventType, ServerEventHandler[]> = new Map();
   private reconnectAttempts: number = 0;
   private maxReconnectAttempts: number = WS_CONFIG.MAX_RECONNECT_ATTEMPTS;
   private reconnectDelay: number = WS_CONFIG.RECONNECT_DELAY_MS;
   private isConnecting: boolean = false;
+  private pendingRequests: Map<string, Promise<ServerResponse>> = new Map();
 
   constructor(url: string) {
     this.url = url;
@@ -46,10 +50,10 @@ export class WSClient {
 
     this.ws.onmessage = (event) => {
       try {
-        const data: ServerResponse = JSON.parse(event.data);
+        const response: ServerResponse = JSON.parse(event.data);
         // TODO: remove after testing
-        console.log('[WS] Message received:', data.type, data);
-        this.notifySubscribers(data);
+        console.log('[WS] Message received:', response.type, response);
+        this.notifySubscribers(response);
       } catch {
         // console.error(WS_ERRORS.INVALID_MESSAGE, event.data);
         // TODO: remove after testing
@@ -74,20 +78,20 @@ export class WSClient {
     };
   }
 
-  send<T>(data: T): void {
+  public send<T>(response: T): void {
     if (this.ws === null) return;
 
-    if (this.ws.readyState === WebSocket.OPEN) this.ws.send(JSON.stringify(data));
+    if (this.ws.readyState === WebSocket.OPEN) this.ws.send(JSON.stringify(response));
   }
 
-  subscribe(event: ServerEventType, handler: ServerEventHandler): void {
+  public subscribe(event: ServerEventType, handler: ServerEventHandler): void {
     if (this.listeners.has(event) === false) this.listeners.set(event, []);
 
     const listeners = this.listeners.get(event);
     if (listeners) listeners.push(handler);
   }
 
-  unsubscribe(event: ServerEventType, handler: ServerEventHandler): void {
+  public unsubscribe(event: ServerEventType, handler: ServerEventHandler): void {
     const listeners = this.listeners.get(event);
     if (listeners) {
       const index = listeners.indexOf(handler);
@@ -95,18 +99,64 @@ export class WSClient {
     }
   }
 
-  close(): void {
+  public close(): void {
     if (this.ws) this.ws.close();
 
     this.listeners.clear();
   }
 
-  private notifySubscribers(data: ServerResponse): void {
+  private notifySubscribers(response: ServerResponse): void {
     const notify = (listeners: ServerEventHandler[] | undefined) => {
-      if (listeners) listeners.forEach((listener) => listener(data));
+      if (listeners) listeners.forEach((listener) => listener(response));
     };
 
-    notify(this.listeners.get(data.type));
+    notify(this.listeners.get(response.type));
     notify(this.listeners.get('*'));
+  }
+
+  public request<T extends ServerEventType>(
+    type: T,
+    payload: ServerRequestPayloads
+  ): Promise<ServerResponse> {
+    const key = JSON.stringify({ type, payload });
+
+    const existing = this.pendingRequests.get(key);
+    if (existing) return existing;
+
+    const request: ServerRequest<ServerRequestPayloads> = {
+      id: generateId(),
+      type,
+      payload,
+    };
+
+    const promise = new Promise<ServerResponse>((resolve, reject) => {
+      const handler = (response: ServerResponse) => {
+        const cleanup = () => {
+          this.unsubscribe(type, handler);
+          this.unsubscribe(SERVER_EVENTS.ERROR, handler);
+          this.pendingRequests.delete(key);
+        };
+
+        if (response.type === SERVER_EVENTS.ERROR) {
+          cleanup();
+          const errorMessage =
+            PAYLOAD_FIELDS.ERROR in response.payload ? response.payload.error : 'Unknown error';
+          reject(new Error(errorMessage));
+          return;
+        }
+
+        if (response.id === request.id && response.type === type) {
+          cleanup();
+          resolve(response);
+        }
+      };
+
+      this.subscribe(type, handler);
+      this.subscribe(SERVER_EVENTS.ERROR, handler);
+      this.send(request);
+    });
+
+    this.pendingRequests.set(key, promise);
+    return promise;
   }
 }

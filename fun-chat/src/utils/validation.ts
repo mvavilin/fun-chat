@@ -39,11 +39,9 @@ export const isFieldValid = (
       break;
   }
 
-  if (isValid) {
-    fieldComponent.removeClass('invalid');
-  } else {
-    fieldComponent.addClass('invalid');
-  }
+  if (isValid) fieldComponent.removeClass('invalid');
+  else fieldComponent.addClass('invalid');
+
   input.reportValidity();
 
   return isValid;

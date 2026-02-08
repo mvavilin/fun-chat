@@ -1,7 +1,7 @@
 import type { ElementBuilder } from '@utils';
 
 export interface EventOptions {
-  type: string;
+  type: keyof HTMLElementEventMap;
   handler: EventListenerOrEventListenerObject;
   options?: boolean | AddEventListenerOptions;
 }

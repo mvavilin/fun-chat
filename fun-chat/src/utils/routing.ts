@@ -1,6 +1,7 @@
 import type { Hash, Route } from '@types';
+import { HASHES } from '@constants';
 
-export const navigateTo = (hash: Hash): void => {
+export const navigateTo = (hash: Hash = HASHES.MAIN): void => {
   window.location.hash = hash;
 };
 

@@ -3,12 +3,12 @@ import type { PageComponentOptions } from '@types';
 import { LoginForm } from '@components';
 
 export default class LoginPage extends PageBuilder {
-  private container: ElementBuilder;
+  private container: ElementBuilder = new ElementBuilder({
+    classes: ['container', 'login-page-container'],
+  });
 
   constructor({ id = 'login-page', classes = ['login-page'] }: PageComponentOptions = {}) {
     super({ id, classes });
-
-    this.container = new ElementBuilder({ classes: ['container', 'login-page-container'] });
 
     this.render();
   }

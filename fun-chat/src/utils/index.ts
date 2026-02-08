@@ -7,8 +7,11 @@ export { WSClient };
 import { isFieldValid } from '@utils/validation';
 export { isFieldValid };
 
-import { findRouteByHash } from '@utils/routing';
-export { findRouteByHash };
+import { findRouteByHash, navigateTo } from '@utils/routing';
+export { findRouteByHash, navigateTo };
 
 export const capitalize = (string: string): string =>
   string.charAt(0).toUpperCase() + string.slice(1);
+
+export const generateId = (): string =>
+  Date.now().toString(36) + Math.random().toString(36).slice(2);
