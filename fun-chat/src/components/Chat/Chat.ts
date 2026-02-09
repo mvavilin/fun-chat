@@ -1,4 +1,4 @@
-import type { User, Message } from '@types';
+import type { User, Message, MessageStatus } from '@types';
 import { NOTIFICATION, SERVER_ERRORS, SERVER_EVENTS, PAYLOAD_FIELDS } from '@constants';
 import { wsClient } from '@/wsClient';
 import { ElementBuilder, eventEmitter } from '@utils';
@@ -30,6 +30,38 @@ export default class Chat extends ElementBuilder {
       if (PAYLOAD_FIELDS.MESSAGE in response.payload && PAYLOAD_FIELDS.TEXT in response.payload.message)
         this.onNewMessage(response.payload.message);
     });
+    wsClient.subscribe(SERVER_EVENTS.MSG_DELETE, (response) => {
+      if (PAYLOAD_FIELDS.MESSAGE in response.payload) this.onMessageDeleted(response.payload.message);
+    });
+    wsClient.subscribe(SERVER_EVENTS.MSG_EDIT, (response) => {
+      if (PAYLOAD_FIELDS.MESSAGE in response.payload && PAYLOAD_FIELDS.TEXT in response.payload.message)
+        this.onMessageEdited(response.payload.message);
+    });
+    wsClient.subscribe(SERVER_EVENTS.MSG_DELIVER, (response) => {
+      if (PAYLOAD_FIELDS.MESSAGE in response.payload) {
+        this.updateMessageStatus(response.payload.message);
+      }
+    });
+    wsClient.subscribe(SERVER_EVENTS.MSG_READ, (response) => {
+      if (PAYLOAD_FIELDS.MESSAGE in response.payload) {
+        this.updateMessageStatus(response.payload.message);
+      }
+    });
+  }
+
+  private updateMessageStatus(messageData: {
+    id: string;
+    status: MessageStatus;
+  }): void {
+    this.messageList.updateMessageStatus(messageData.id, messageData.status);
+  }
+
+  private onMessageDeleted(message: { id: string; status: MessageStatus }): void {
+    this.messageList.removeMessage(message.id);
+  }
+
+  private onMessageEdited(updatedMessage: Message): void {
+    this.messageList.updateMessage(updatedMessage);
   }
 
   private onNewMessage(message: Message): void {

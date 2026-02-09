@@ -1,11 +1,13 @@
 import { ElementBuilder } from '@utils';
-import type { Message } from '@types';
+import type { Message, MessageStatus } from '@types';
 import { authState } from '@state';
 import { MessageItem } from '@components/Chat/components';
 
 export default class MessageList extends ElementBuilder {
   private unreadSeparator: ElementBuilder | null = null;
   private separatorRemoved: boolean = false;
+
+  private messageItems: Map<string, MessageItem> = new Map();
 
   constructor() {
     super({
@@ -52,6 +54,10 @@ export default class MessageList extends ElementBuilder {
       this.content = '';
     }
 
+    const messageItem = new MessageItem(message);
+    this.messageItems.set(message.id, messageItem);
+    this.addChild(messageItem);
+
     if (message.from === authState.user.login) this.removeUnreadSeparator();
     this.addChild(new MessageItem(message));
     this.updateScroll();
@@ -72,5 +78,35 @@ export default class MessageList extends ElementBuilder {
     this.unreadSeparator.remove();
     this.unreadSeparator = null;
     this.separatorRemoved = true;
+  }
+
+  public removeMessage(messageId: string): void {
+    const messageElement = this.getElement().querySelector(`[data-message-id="${messageId}"]`);
+    if (messageElement) messageElement.remove();
+  }
+
+  public updateMessage(updatedMessage: Message): void {
+    const messageElement = this.getElement().querySelector(`[data-message-id="${updatedMessage.id}"]`);
+    if (messageElement) {
+      const textElement = messageElement.querySelector('.message-text');
+      if (textElement) {
+        textElement.textContent = updatedMessage.text;
+
+        const editedBadge = messageElement.querySelector('.edited-badge');
+        if (updatedMessage.status.isEdited && editedBadge === null) {
+          const badge = new ElementBuilder({
+            tag: 'span',
+            classes: ['edited-badge'],
+            content: '(edited)'
+          })
+          messageElement.appendChild(badge.getElement());
+        }
+      }
+    }
+  }
+
+  public updateMessageStatus(messageId: string, status: MessageStatus): void {
+    const messageItem = this.messageItems.get(messageId);
+    if (messageItem && status) messageItem.updateStatus(status);
   }
 }
