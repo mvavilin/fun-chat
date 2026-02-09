@@ -11,6 +11,7 @@
   overflow: hidden;
   box-shadow: $shadow-small;
   @include flex-container(column);
+  max-height: 100vh;
 }
 
 .chat-header {
@@ -59,36 +60,15 @@
 .messages-history {
   flex: 1;
   padding: $spacing-lg;
-  padding-top: 0;
   overflow-y: auto;
   @include flex-container(column);
   gap: $spacing-md;
-  min-height: 300px;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $color-scrollbar-track;
-    border-radius: $radius-full;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $color-scrollbar-thumb;
-    border-radius: $radius-full;
-
-    &:hover {
-      background: $color-scrollbar-thumb-hover;
-    }
-  }
 
   &.empty {
     @include flex-container(column, center, center);
     color: $color-text-secondary;
     font-size: $font-size-lg;
     text-align: center;
-    padding: $spacing-xl;
   }
 }
 
@@ -119,11 +99,15 @@
 }
 
 .message {
-  max-width: 80%;
-  padding: $spacing-md;
+  min-width: $width-sm;
+  max-width: $width-xl;
+
+  padding: $spacing-sm;
   border-radius: $radius-lg;
   position: relative;
   word-wrap: break-word;
+
+  @include flex-container(column, flex-start, stretch, nowrap, $spacing-sm);
 
   &.sent {
     align-self: flex-end;
@@ -138,9 +122,16 @@
   }
 }
 
+.message-content {
+  @include flex-container(column, flex-start, stretch, nowrap, $spacing-sm);
+}
+
+.message-meta {
+  @include flex-container(row, space-between, stretch, nowrap, $spacing-sm);
+}
+
 .message-header {
   @include flex-container(row, space-between, center);
-  margin-bottom: $spacing-xs;
   font-size: $font-size-xs;
 }
 
@@ -149,13 +140,13 @@
   color: $color-text;
 }
 
-.message-time {
-  color: $color-text-secondary;
+.message-text {
+  font-size: $font-size-md;
 }
 
-.message-content {
-  line-height: 1.5;
-  margin-bottom: $spacing-xs;
+.message-time {
+  color: $color-text-secondary;
+  font-size: $font-size-xs;
 }
 
 .message-status {
@@ -180,9 +171,7 @@
 }
 
 .message-actions {
-  @include flex-container(row, flex-end, center);
-  gap: $spacing-xs;
-  margin-top: $spacing-xs;
+  @include flex-container(row, flex-end, center, nowrap, $spacing-xs);
 }
 
 /* Поле ввода сообщений */

@@ -31,6 +31,8 @@ import type {
   ServerResponse,
   ServerRequest,
   ServerRequestPayloads,
+  Message,
+  MessageStatus,
 } from '@/types/ws';
 
 export type {
@@ -40,6 +42,8 @@ export type {
   ServerResponse,
   ServerRequest,
   ServerRequestPayloads,
+  Message,
+  MessageStatus,
 };
 
 import type { HttpStatus, HttpMethod, ApiMethods } from '@/types/api';

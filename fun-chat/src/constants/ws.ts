@@ -43,8 +43,7 @@ export const WS_MESSAGES = {
   CONNECTED: 'Connected',
   CONNECTING: 'Connecting…',
   CONNECTION_CLOSED: `Connection closed. Reconnecting…`,
-  CONNECTION_FAILED: (url: string, error?: string) =>
-    `Connection to ${url} failed${error ? `: ${error}` : ''}`,
+  CONNECTION_FAILED: (url: string, error?: string) => `Connection to ${url} failed${error ? `: ${error}` : ''}`,
   TIMEOUT: (type: string, id: string) => `Request ${type} (${id}) timeout`,
   AUTH_SUCCESS: 'Authentication successful',
   AUTH_FAILED: 'Authentication failed',
@@ -67,4 +66,5 @@ export const PAYLOAD_FIELDS = {
   MESSAGES: 'messages',
   COUNT: 'count',
   MESSAGE: 'message',
+  TEXT: 'text',
 } as const;

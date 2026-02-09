@@ -7,13 +7,7 @@ export { UI_TEXTS };
 import { NOTIFICATION } from '@constants/notification';
 export { NOTIFICATION };
 
-import {
-  SERVER_EVENTS,
-  SERVER_ERRORS,
-  WS_CONFIG,
-  WS_MESSAGES,
-  PAYLOAD_FIELDS,
-} from '@constants/ws';
+import { SERVER_EVENTS, SERVER_ERRORS, WS_CONFIG, WS_MESSAGES, PAYLOAD_FIELDS } from '@constants/ws';
 export { SERVER_EVENTS, SERVER_ERRORS, WS_CONFIG, WS_MESSAGES, PAYLOAD_FIELDS };
 
 import { HASHES, routes } from '@constants/router';

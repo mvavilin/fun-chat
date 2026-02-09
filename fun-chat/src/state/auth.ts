@@ -4,7 +4,7 @@ import { StorageService } from '@services';
 const userStorage = new StorageService<User>('user');
 
 class AuthState {
-  private _user: User = { login: null, password: null, isLogined: false };
+  private _user: User = { login: '', password: '', isLogined: false };
   private listeners: Array<(user: User) => void> = [];
 
   constructor() {
@@ -24,7 +24,7 @@ class AuthState {
   };
 
   public clearUser = (): void => {
-    this._user = { login: null, password: null, isLogined: false };
+    this._user = { login: '', password: '', isLogined: false };
     userStorage.clear();
     this.notifyListeners();
   };

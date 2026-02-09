@@ -5,6 +5,7 @@ import type {
   ServerResponse,
   ServerRequestPayloads,
   User,
+  Message,
 } from '@types';
 import { WS_CONFIG, PAYLOAD_FIELDS, SERVER_EVENTS, WS_MESSAGES, NOTIFICATION } from '@constants';
 import { Notification } from '@components/ui';
@@ -63,8 +64,7 @@ export class WSClient {
     this.ws.onclose = () => {
       this.isConnecting = false;
 
-      if (this.reconnectAttempts === 0)
-        new Notification(WS_MESSAGES.CONNECTION_CLOSED, NOTIFICATION.TYPE.WARNING);
+      if (this.reconnectAttempts === 0) new Notification(WS_MESSAGES.CONNECTION_CLOSED, NOTIFICATION.TYPE.WARNING);
 
       setTimeout(() => this.reconnect(), this.reconnectDelay);
     };
@@ -119,10 +119,7 @@ export class WSClient {
     notify(this.listeners.get('*'));
   }
 
-  public request<T extends ServerEventType>(
-    type: T,
-    payload: ServerRequestPayloads
-  ): Promise<ServerResponse> {
+  public request<T extends ServerEventType>(type: T, payload: ServerRequestPayloads = null): Promise<ServerResponse> {
     const key = JSON.stringify({ type, payload });
 
     const existing = this.pendingRequests.get(key);
@@ -144,8 +141,7 @@ export class WSClient {
 
         if (response.type === SERVER_EVENTS.ERROR) {
           cleanup();
-          const errorMessage =
-            PAYLOAD_FIELDS.ERROR in response.payload ? response.payload.error : 'Unknown error';
+          const errorMessage = PAYLOAD_FIELDS.ERROR in response.payload ? response.payload.error : 'Unknown error';
           reject(new Error(errorMessage));
           return;
         }
@@ -171,14 +167,55 @@ export class WSClient {
   // TODO: move methods to a private ws (e.g., WSFunChat)
 
   public async getActiveUsers(): Promise<User[]> {
-    const response = await this.request(SERVER_EVENTS.USER_ACTIVE, null);
+    const response = await this.request(SERVER_EVENTS.USER_ACTIVE);
 
     return PAYLOAD_FIELDS.USERS in response.payload ? response.payload.users : [];
   }
 
   public async getInactiveUsers(): Promise<User[]> {
-    const response = await this.request(SERVER_EVENTS.USER_INACTIVE, null);
+    const response = await this.request(SERVER_EVENTS.USER_INACTIVE);
 
     return PAYLOAD_FIELDS.USERS in response.payload ? response.payload.users : [];
+  }
+
+  public async getUnreadCount(userLogin: string): Promise<number> {
+    const response = await this.request(SERVER_EVENTS.MSG_COUNT_NOT_READED_FROM_USER, {
+      user: { login: userLogin },
+    });
+
+    return PAYLOAD_FIELDS.COUNT in response.payload ? response.payload.count : 0;
+  }
+
+  public async getMessageHistory(userLogin: string): Promise<Message[]> {
+    const response = await this.request(SERVER_EVENTS.MSG_FROM_USER, {
+      user: { login: userLogin },
+    });
+
+    return PAYLOAD_FIELDS.MESSAGES in response.payload ? response.payload.messages : [];
+  }
+
+  public async sendMessage(to: string, text: string): Promise<Message | null> {
+    const response = await this.request(SERVER_EVENTS.MSG_SEND, {
+      message: { to, text },
+    });
+    return PAYLOAD_FIELDS.MESSAGE in response.payload && PAYLOAD_FIELDS.TEXT in response.payload.message
+      ? response.payload.message
+      : null;
+  }
+
+  public async markAsRead(id: string): Promise<void> {
+    await this.request(SERVER_EVENTS.MSG_READ, { message: { id } });
+  }
+
+  public async editMessage(id: string, newText: string): Promise<void> {
+    await this.request(SERVER_EVENTS.MSG_EDIT, {
+      message: { id, text: newText },
+    });
+  }
+
+  public async deleteMessage(id: string): Promise<void> {
+    await this.request(SERVER_EVENTS.MSG_DELETE, {
+      message: { id },
+    });
   }
 }

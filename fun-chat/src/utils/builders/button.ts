@@ -2,15 +2,7 @@ import { ElementBuilder } from '@utils';
 import type { ButtonBuilderOptions } from '@types';
 
 export default class ButtonBuilder extends ElementBuilder {
-  constructor({
-    id,
-    classes = [],
-    content,
-    events,
-    type = 'button',
-    disabled,
-    children,
-  }: ButtonBuilderOptions) {
+  constructor({ id, classes = [], content, events, type = 'button', disabled, children }: ButtonBuilderOptions) {
     super({
       tag: 'button',
       id,

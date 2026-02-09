@@ -30,12 +30,9 @@ export const API_MESSAGES = {
     `${method.toUpperCase()} ${url} ${status} (Bad request)`,
   UNAUTHORIZED: (method: string, url: string, status: number) =>
     `${method.toUpperCase()} ${url} ${status} (Unauthorized)`,
-  FORBIDDEN: (method: string, url: string, status: number) =>
-    `${method.toUpperCase()} ${url} ${status} (Forbidden)`,
-  NOT_FOUND: (method: string, url: string, status: number) =>
-    `${method.toUpperCase()} ${url} ${status} (Not Found)`,
-  CONFLICT: (method: string, url: string, status: number) =>
-    `${method.toUpperCase()} ${url} ${status} (Data conflict)`,
+  FORBIDDEN: (method: string, url: string, status: number) => `${method.toUpperCase()} ${url} ${status} (Forbidden)`,
+  NOT_FOUND: (method: string, url: string, status: number) => `${method.toUpperCase()} ${url} ${status} (Not Found)`,
+  CONFLICT: (method: string, url: string, status: number) => `${method.toUpperCase()} ${url} ${status} (Data conflict)`,
   SERVER_ERROR: (method: string, url: string, status: number) =>
     `${method.toUpperCase()} ${url} ${status} (Server error)`,
   REQUEST_ERROR: (method: string, url: string, status: number) =>

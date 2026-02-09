@@ -53,23 +53,11 @@ export default class About extends ElementBuilder {
   }
 
   private render(): void {
-    this.authorText.addChild(
-      new ElementBuilder({ tag: 'span', content: 'Author: ' }),
-      this.authorLink
-    );
+    this.authorText.addChild(new ElementBuilder({ tag: 'span', content: 'Author: ' }), this.authorLink);
 
-    this.instruction.addChild(
-      this.loginLink,
-      new ElementBuilder({ tag: 'span', content: ' to start messaging.' })
-    );
+    this.instruction.addChild(this.loginLink, new ElementBuilder({ tag: 'span', content: ' to start messaging.' }));
 
-    this.contentBox.addChild(
-      this.title,
-      this.description,
-      this.photo,
-      this.authorText,
-      this.instruction
-    );
+    this.contentBox.addChild(this.title, this.description, this.photo, this.authorText, this.instruction);
 
     this.contentWrapper.addChild(this.contentBox);
     this.container.addChild(this.contentWrapper);

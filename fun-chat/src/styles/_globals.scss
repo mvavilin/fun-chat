@@ -72,6 +72,11 @@ body {
     font-size: $font-size-lg;
     min-height: 52px;
   }
+
+  &.edit-btn,
+  &.delete-btn {
+    font-size: $font-size-xs;
+  }
 }
 
 .input {
@@ -169,5 +174,21 @@ textarea {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-scrollbar-track;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-scrollbar-thumb;
+
+  &:hover {
+    background: $color-scrollbar-thumb-hover;
   }
 }

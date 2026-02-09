@@ -1,12 +1,5 @@
 import type { User, ServerResponse } from '@types';
-import {
-  SERVER_EVENTS,
-  PAYLOAD_FIELDS,
-  HASHES,
-  WS_MESSAGES,
-  NOTIFICATION,
-  SERVER_ERRORS,
-} from '@constants';
+import { SERVER_EVENTS, PAYLOAD_FIELDS, HASHES, WS_MESSAGES, NOTIFICATION, SERVER_ERRORS } from '@constants';
 import { Notification } from '@components/ui';
 import { authState } from '@state';
 import { wsClient } from '@/wsClient';

@@ -20,11 +20,7 @@ export function handleHttpError(method: string, url: string, status: number): ne
   }
 }
 
-export async function apiRequest<T>(
-  method: HttpMethod,
-  url: string,
-  data?: unknown
-): Promise<T | null> {
+export async function apiRequest<T>(method: HttpMethod, url: string, data?: unknown): Promise<T | null> {
   const headers = { 'Content-Type': 'application/json' };
   const options: RequestInit = { method, headers };
 

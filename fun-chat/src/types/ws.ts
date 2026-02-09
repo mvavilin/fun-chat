@@ -10,8 +10,8 @@ export type ServerRequest<TPayload> = {
 };
 
 export type User = {
-  login: string | null;
-  password?: string | null;
+  login: string;
+  password?: string;
   isLogined?: boolean;
 };
 
@@ -41,6 +41,7 @@ export type ServerRequestPayloads =
   | UserLogoutPayload
   | MsgSendPayload
   | MsgFromUserPayload
+  | { message: { id: string } }
   | null;
 
 type ServerErrorPayload = { error: ServerErrorMessage };

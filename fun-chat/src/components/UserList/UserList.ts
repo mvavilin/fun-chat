@@ -1,4 +1,4 @@
-import { ElementBuilder } from '@utils';
+import { ElementBuilder, eventEmitter } from '@utils';
 import type { User } from '@types';
 
 export default class UserList extends ElementBuilder {
@@ -8,13 +8,23 @@ export default class UserList extends ElementBuilder {
   }
 
   public updateUsers(users: User[]): void {
-    this.removeContent();
+    this.clear();
     this.render(users);
   }
 
   private render(users: User[]): void {
     users.forEach((user) => {
-      const userItem = new ElementBuilder({ classes: ['user-item'] });
+      const userItem = new ElementBuilder({
+        classes: ['user-item'],
+        events: [
+          {
+            type: 'click',
+            handler: () => {
+              eventEmitter.emit('user-selected', user);
+            },
+          },
+        ],
+      });
 
       const statusDot = new ElementBuilder({
         classes: ['online-status', user.isLogined ? 'online' : 'offline'],
@@ -27,9 +37,6 @@ export default class UserList extends ElementBuilder {
       });
 
       userItem.addChild(statusDot, nameSpan);
-
-      // TODO: add unread messages count
-
       this.addChild(userItem);
     });
   }

@@ -10,8 +10,9 @@ export { isFieldValid };
 import { findRouteByHash, navigateTo } from '@utils/routing';
 export { findRouteByHash, navigateTo };
 
-export const capitalize = (string: string): string =>
-  string.charAt(0).toUpperCase() + string.slice(1);
+import { eventEmitter } from '@utils/eventEmitter';
+export { eventEmitter };
 
-export const generateId = (): string =>
-  Date.now().toString(36) + Math.random().toString(36).slice(2);
+export const capitalize = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
+
+export const generateId = (): string => Date.now().toString(36) + Math.random().toString(36).slice(2);

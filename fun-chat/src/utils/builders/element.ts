@@ -3,16 +3,7 @@ import type { ElementBuilderOptions, EventOptions } from '@types';
 export default class ElementBuilder {
   private element: HTMLElement;
 
-  constructor({
-    tag = 'div',
-    id,
-    classes,
-    content,
-    attributes,
-    styles,
-    events,
-    children,
-  }: ElementBuilderOptions = {}) {
+  constructor({ tag = 'div', id, classes, content, attributes, styles, events, children }: ElementBuilderOptions = {}) {
     this.element = document.createElement(tag);
 
     if (id) this.id = id;
@@ -80,14 +71,10 @@ export default class ElementBuilder {
     keys.forEach((key) => this.element.style.removeProperty(String(key)));
 
   public addEvent = (...events: EventOptions[]): void =>
-    events.forEach(({ type, handler, options = false }) =>
-      this.element.addEventListener(type, handler, options)
-    );
+    events.forEach(({ type, handler, options = false }) => this.element.addEventListener(type, handler, options));
 
   public removeEvent = (...events: EventOptions[]): void =>
-    events.forEach(({ type, handler, options = false }) =>
-      this.element.removeEventListener(type, handler, options)
-    );
+    events.forEach(({ type, handler, options = false }) => this.element.removeEventListener(type, handler, options));
 
   public addChild = (...children: ElementBuilder[]): void =>
     children.forEach((child) => this.element.appendChild(child.getElement()));
