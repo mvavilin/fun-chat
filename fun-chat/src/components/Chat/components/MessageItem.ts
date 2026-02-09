@@ -7,6 +7,7 @@ export default class MessageItem extends ElementBuilder {
   private message: Message;
   private isEditing: boolean = false;
 
+  private senderName: ElementBuilder = new ElementBuilder({ tag: 'span', classes: ['message-sender'] });
   private text: ElementBuilder = new ElementBuilder({ classes: ['message-text'] });
   private editedBadge: ElementBuilder = new ElementBuilder({
     tag: 'span',
@@ -44,6 +45,8 @@ export default class MessageItem extends ElementBuilder {
   }
 
   private render(): void {
+    this.senderName.content = this.message.from;
+
     this.text.content = this.message.text;
 
     if (this.message.status.isEdited) this.text.addChild(this.editedBadge);
@@ -57,7 +60,7 @@ export default class MessageItem extends ElementBuilder {
       this.updateStatusDisplay();
     }
 
-    this.contentWrapper.addChild(this.text, this.meta);
+    this.contentWrapper.addChild(this.senderName, this.text, this.meta);
 
     this.addChild(this.contentWrapper);
 

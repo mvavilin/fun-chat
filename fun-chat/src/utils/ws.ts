@@ -84,8 +84,6 @@ export class WSClient {
   public send<T>(response: T): void {
     if (this.ws === null) return;
 
-    console.log('Server status:', this.ws.readyState === WebSocket.OPEN);
-
     if (this.ws.readyState === WebSocket.OPEN) this.ws.send(JSON.stringify(response));
   }
 
@@ -154,8 +152,6 @@ export class WSClient {
 
       this.subscribe(type, handler);
       this.subscribe(SERVER_EVENTS.ERROR, handler);
-
-      console.log('Request:', request);
 
       this.send(request);
     });
