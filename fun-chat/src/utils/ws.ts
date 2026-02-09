@@ -4,6 +4,7 @@ import type {
   ServerEventHandler,
   ServerResponse,
   ServerRequestPayloads,
+  User,
 } from '@types';
 import { WS_CONFIG, PAYLOAD_FIELDS, SERVER_EVENTS, WS_MESSAGES, NOTIFICATION } from '@constants';
 import { Notification } from '@components/ui';
@@ -83,6 +84,8 @@ export class WSClient {
   public send<T>(response: T): void {
     if (this.ws === null) return;
 
+    console.log('Server status:', this.ws.readyState === WebSocket.OPEN);
+
     if (this.ws.readyState === WebSocket.OPEN) this.ws.send(JSON.stringify(response));
   }
 
@@ -155,10 +158,27 @@ export class WSClient {
 
       this.subscribe(type, handler);
       this.subscribe(SERVER_EVENTS.ERROR, handler);
+
+      console.log('Request:', request);
+
       this.send(request);
     });
 
     this.pendingRequests.set(key, promise);
     return promise;
+  }
+
+  // TODO: move methods to a private ws (e.g., WSFunChat)
+
+  public async getActiveUsers(): Promise<User[]> {
+    const response = await this.request(SERVER_EVENTS.USER_ACTIVE, null);
+
+    return PAYLOAD_FIELDS.USERS in response.payload ? response.payload.users : [];
+  }
+
+  public async getInactiveUsers(): Promise<User[]> {
+    const response = await this.request(SERVER_EVENTS.USER_INACTIVE, null);
+
+    return PAYLOAD_FIELDS.USERS in response.payload ? response.payload.users : [];
   }
 }

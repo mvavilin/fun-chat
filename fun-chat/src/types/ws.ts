@@ -40,7 +40,8 @@ export type ServerRequestPayloads =
   | UserLoginPayload
   | UserLogoutPayload
   | MsgSendPayload
-  | MsgFromUserPayload;
+  | MsgFromUserPayload
+  | null;
 
 type ServerErrorPayload = { error: ServerErrorMessage };
 

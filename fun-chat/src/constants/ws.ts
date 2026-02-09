@@ -50,6 +50,7 @@ export const WS_MESSAGES = {
   AUTH_FAILED: 'Authentication failed',
   REAUTH_SUCCESS: 'Re-authentication successful',
   REAUTH_FAILED: 'Re-authentication failed',
+  UPDATE_USERS_FAILED: 'Failed to update user list',
 };
 
 export const WS_CONFIG = {
