@@ -4,6 +4,7 @@ type EventsMap = {
   'user-selected': User;
   'send-message': string;
   'edit-message': Message;
+  'edit-message-submit': { id: string; text: string };
   'delete-message': Message;
 };
 

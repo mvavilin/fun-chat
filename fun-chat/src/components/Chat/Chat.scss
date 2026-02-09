@@ -326,3 +326,11 @@
     }
   }
 }
+
+.unread-separator {
+  margin-top: auto;
+  font-size: $font-size-sm;
+  width: $width-full;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $color-border;
+}

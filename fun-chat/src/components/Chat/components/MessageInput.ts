@@ -53,8 +53,6 @@ export default class MessageInput extends ElementBuilder {
   }
 
   private sendMessage(): void {
-    console.log(1);
-
     const text = this.getMessage();
     if (text && this.isActive) {
       eventEmitter.emit('send-message', text);

@@ -60,7 +60,10 @@ export default class Chat extends ElementBuilder {
 
     try {
       const messages = await wsClient.getMessageHistory(this.selectedUser.login);
-      this.messageList.render(messages);
+      const hasUnread = this.unreadCount > 0;
+
+      this.messageList.render(messages, hasUnread);
+      this.messageList.updateScroll();
     } catch (error) {
       const message = error instanceof Error ? error.message : SERVER_ERRORS.INTERNAL_ERROR;
       new Notification(message, NOTIFICATION.TYPE.ERROR);
