@@ -98,6 +98,10 @@
   }
 }
 
+.message:first-child {
+  margin-top: auto;
+}
+
 .message {
   min-width: $width-sm;
   max-width: $width-xl;
@@ -202,16 +206,6 @@
 
   &:focus {
     box-shadow: $shadow-focus;
-  }
-}
-
-.send-button {
-  align-self: flex-end;
-  height: 60px;
-  min-width: 100px;
-
-  &:disabled {
-    opacity: 0.6;
   }
 }
 
