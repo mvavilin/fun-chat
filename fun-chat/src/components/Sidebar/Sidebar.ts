@@ -1,16 +1,23 @@
 import { wsClient } from '@/wsClient';
 import { authState } from '@state';
 import { UserList } from '@components';
-import { ElementBuilder } from '@utils';
+import { ElementBuilder, InputBuilder } from '@utils';
 import { Notification } from '@components/ui';
 import { NOTIFICATION, WS_MESSAGES, SERVER_EVENTS } from '@constants';
+import type { User } from '@types';
 
 export default class Sidebar extends ElementBuilder {
   private userList: UserList = new UserList([]);
+  private allUsers: User[] = [];
+  private searchInput: InputBuilder = new InputBuilder({
+    classes: ['search-input'],
+    attributes: { type: 'text', placeholder: 'Search users...', id: 'user-search' },
+  });
 
   constructor() {
     super({ tag: 'aside', classes: ['sidebar'] });
 
+    this.searchInput.addEvent({ type: 'input', handler: () => this.filterUsers() });
     this.init();
   }
 
@@ -29,13 +36,29 @@ export default class Sidebar extends ElementBuilder {
       const inactiveUsers = await wsClient.getInactiveUsers();
       const filteredActiveUsers = activeUsers.filter((user) => user.login !== authState.user.login);
 
-      this.userList.updateUsers([...filteredActiveUsers, ...inactiveUsers]);
+      this.allUsers = [...filteredActiveUsers, ...inactiveUsers];
+
+      this.filterUsers();
     } catch {
       new Notification(WS_MESSAGES.UPDATE_USERS_FAILED, NOTIFICATION.TYPE.ERROR);
     }
   }
 
+  private filterUsers(): void {
+    const searchQuery = this.searchInput.value.trim().toLowerCase();
+
+    let filteredUsers = this.allUsers;
+
+    if (searchQuery) {
+      filteredUsers = this.allUsers.filter((user) =>
+        user.login ? user.login.toLowerCase().includes(searchQuery) : false
+      );
+    }
+
+    this.userList.updateUsers(filteredUsers);
+  }
+
   private render(): void {
-    this.addChild(this.userList);
+    this.addChild(this.searchInput, this.userList);
   }
 }

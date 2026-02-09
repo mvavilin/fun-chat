@@ -17,7 +17,7 @@ export default class InputBuilder extends ElementBuilder {
       id,
       classes: ['input', ...classes],
       attributes,
-      events: events,
+      events,
     });
 
     this.type = type;
@@ -61,7 +61,7 @@ export default class InputBuilder extends ElementBuilder {
     if (input) input.disabled = state;
   }
 
-  public clear = (): void => {
+  override clear = (): void => {
     const input = this.getInput();
     if (input) input.value = '';
   };
