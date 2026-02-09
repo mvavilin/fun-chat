@@ -66,18 +66,26 @@ export default class MessageItem extends ElementBuilder {
 
   private addActionButtons(): void {
     this.editButton.addEvent({
-      type: 'click', handler: () => {
+      type: 'click',
+      handler: () => {
         if (this.isEditing) this.saveChanges();
-        else this.enableEditing()
+        else this.enableEditing();
       },
     });
-    this.deleteButton.addEvent({ type: 'click', handler: () => { this.deleteMessage() }, });
+    this.deleteButton.addEvent({
+      type: 'click',
+      handler: () => {
+        this.deleteMessage();
+      },
+    });
 
     this.actions.addChild(this.editButton, this.deleteButton);
     this.addChild(this.actions);
   }
 
-  private deleteMessage(): void { wsClient.deleteMessage(this.message.id) }
+  private deleteMessage(): void {
+    wsClient.deleteMessage(this.message.id);
+  }
 
   private enableEditing(): void {
     this.isEditing = true;
@@ -96,7 +104,7 @@ export default class MessageItem extends ElementBuilder {
     this.message.text = newText;
     this.message.status.isEdited = true;
 
-    wsClient.editMessage(this.message.id, newText)
+    wsClient.editMessage(this.message.id, newText);
   }
 
   private cancelEdit(): void {

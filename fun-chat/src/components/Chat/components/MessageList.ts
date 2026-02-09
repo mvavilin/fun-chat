@@ -97,8 +97,8 @@ export default class MessageList extends ElementBuilder {
           const badge = new ElementBuilder({
             tag: 'span',
             classes: ['edited-badge'],
-            content: '(edited)'
-          })
+            content: '(edited)',
+          });
           messageElement.appendChild(badge.getElement());
         }
       }

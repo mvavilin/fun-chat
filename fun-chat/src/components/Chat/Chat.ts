@@ -2,11 +2,12 @@ import type { User, Message, MessageStatus } from '@types';
 import { NOTIFICATION, SERVER_ERRORS, SERVER_EVENTS, PAYLOAD_FIELDS } from '@constants';
 import { wsClient } from '@/wsClient';
 import { ElementBuilder, eventEmitter } from '@utils';
-import { MessageList, MessageInput } from '@components/Chat/components';
+import { ChatHeader, MessageList, MessageInput } from '@components/Chat/components';
 import { Notification } from '@components/ui';
 
 export default class Chat extends ElementBuilder {
   private selectedUser: User | null = null;
+  private chatHeader: ChatHeader = new ChatHeader();
   private messageList: MessageList = new MessageList();
   private messageInput: MessageInput = new MessageInput();
   private unreadCount: number = 0;
@@ -19,7 +20,7 @@ export default class Chat extends ElementBuilder {
   }
 
   private render(): void {
-    this.addChild(this.messageList, this.messageInput);
+    this.addChild(this.chatHeader, this.messageList, this.messageInput);
   }
 
   private setupEventListeners(): void {
@@ -49,10 +50,7 @@ export default class Chat extends ElementBuilder {
     });
   }
 
-  private updateMessageStatus(messageData: {
-    id: string;
-    status: MessageStatus;
-  }): void {
+  private updateMessageStatus(messageData: { id: string; status: MessageStatus }): void {
     this.messageList.updateMessageStatus(messageData.id, messageData.status);
   }
 
@@ -72,6 +70,7 @@ export default class Chat extends ElementBuilder {
 
   private async onUserSelected(user: User): Promise<void> {
     this.selectedUser = user;
+    this.chatHeader.updateUser(user);
     this.messageInput.setActive(true);
 
     try {
