@@ -30,7 +30,7 @@ export default class LoginForm extends ElementBuilder {
     this.addChild(this.title, this.loginInput, this.passwordInput, this.submitBtn);
   }
 
-  private async handleSubmit(): Promise<void> {
+  public async handleSubmit(): Promise<void> {
     const login = this.loginInput.value;
     const password = this.passwordInput.value;
 
