@@ -49,6 +49,8 @@ export default class MessageList extends ElementBuilder {
   }
 
   public addMessage(message: Message): void {
+    if (this.messageItems.has(message.id)) return;
+
     if (this.hasClass('empty')) {
       this.removeClass('empty');
       this.content = '';
@@ -58,8 +60,10 @@ export default class MessageList extends ElementBuilder {
     this.messageItems.set(message.id, messageItem);
     this.addChild(messageItem);
 
-    if (message.from === authState.user.login) this.removeUnreadSeparator();
-    this.addChild(new MessageItem(message));
+    if (message.from === authState.user.login) {
+      this.removeUnreadSeparator();
+    }
+
     this.updateScroll();
   }
 
