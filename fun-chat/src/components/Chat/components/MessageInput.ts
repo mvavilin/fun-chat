@@ -65,4 +65,12 @@ export default class MessageInput extends ElementBuilder {
     wrapper.addChild(this.textarea);
     this.addChild(wrapper, this.sendButton);
   }
+
+  public submitMessage(): void {
+    const text = this.getMessage();
+    if (text && this.isActive) {
+      eventEmitter.emit('send-message', text);
+      this.clearMessageInput();
+    }
+  }
 }

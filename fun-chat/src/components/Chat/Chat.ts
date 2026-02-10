@@ -20,6 +20,18 @@ export default class Chat extends ElementBuilder {
   }
 
   private render(): void {
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key !== 'Enter') return;
+
+      const target = event.target;
+
+      if (target instanceof HTMLTextAreaElement) return;
+      if (target instanceof HTMLElement && target.isContentEditable) return;
+
+      event.preventDefault();
+
+      this.messageInput.submitMessage();
+    });
     this.addChild(this.chatHeader, this.messageList, this.messageInput);
   }
 
