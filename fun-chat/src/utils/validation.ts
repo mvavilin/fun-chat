@@ -18,25 +18,19 @@ export const isFieldValid = (
 
   let isValid = false;
 
-  switch (true) {
-    case fieldComponent.isEmpty():
-      input.setCustomValidity(errors.empty(fieldComponent.id));
-      break;
-
-    case MIN_LENGTH !== undefined &&
-      MAX_LENGTH !== undefined &&
-      !fieldComponent.hasLengthBetween(MIN_LENGTH, MAX_LENGTH):
-      input.setCustomValidity(errors.length(fieldComponent.id, MIN_LENGTH, MAX_LENGTH));
-      break;
-
-    case REGEX && !fieldComponent.isValidByRegex(REGEX):
-      if (DESCRIPTION) input.setCustomValidity(errors.format(fieldComponent.id, DESCRIPTION));
-      break;
-
-    default:
-      isValid = true;
-      input.setCustomValidity('');
-      break;
+  if (fieldComponent.isEmpty()) {
+    input.setCustomValidity(errors.empty(fieldComponent.id));
+  } else if (
+    MIN_LENGTH !== undefined &&
+    MAX_LENGTH !== undefined &&
+    !fieldComponent.hasLengthBetween(MIN_LENGTH, MAX_LENGTH)
+  ) {
+    input.setCustomValidity(errors.length(fieldComponent.id, MIN_LENGTH, MAX_LENGTH));
+  } else if (REGEX && !fieldComponent.isValidByRegex(REGEX)) {
+    if (DESCRIPTION) input.setCustomValidity(errors.format(fieldComponent.id, DESCRIPTION));
+  } else {
+    isValid = true;
+    input.setCustomValidity('');
   }
 
   if (isValid) fieldComponent.removeClass('invalid');

@@ -13,8 +13,6 @@ export default class ElementBuilder {
     if (styles) this.addStyle(styles);
     if (events) this.addEvent(...events);
     if (children) {
-      console.log(1);
-
       this.addChild(...children);
     }
   }

@@ -160,8 +160,6 @@ export class WSClient {
     return promise;
   }
 
-  // TODO: move methods to a private ws (e.g., WSFunChat)
-
   public async getActiveUsers(): Promise<User[]> {
     const response = await this.request(SERVER_EVENTS.USER_ACTIVE);
 

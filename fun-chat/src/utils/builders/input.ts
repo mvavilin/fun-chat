@@ -66,8 +66,6 @@ export default class InputBuilder extends ElementBuilder {
     if (input) input.value = '';
   };
 
-  // TODO: Move methods to TextInput class ↓
-
   public isEmpty = (): boolean => {
     return this.value.length === 0;
   };

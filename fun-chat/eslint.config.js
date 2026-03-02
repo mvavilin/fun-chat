@@ -7,6 +7,9 @@ import tseslint from 'typescript-eslint';
 export default [
   {
     ignores: ['node_modules', 'dist'],
+    linterOptions: {
+      noInlineConfig: true,
+    },
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

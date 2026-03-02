@@ -16,3 +16,5 @@ export { eventEmitter };
 export const capitalize = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
 
 export const generateId = (): string => Date.now().toString(36) + Math.random().toString(36).slice(2);
+
+export { showErrorNotification } from '@utils/notification';

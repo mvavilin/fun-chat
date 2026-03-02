@@ -1,9 +1,8 @@
 import type { User, Message, MessageStatus } from '@types';
-import { NOTIFICATION, SERVER_ERRORS, SERVER_EVENTS, PAYLOAD_FIELDS } from '@constants';
+import { SERVER_EVENTS, PAYLOAD_FIELDS } from '@constants';
 import { wsClient } from '@/wsClient';
-import { ElementBuilder, eventEmitter } from '@utils';
+import { ElementBuilder, eventEmitter, showErrorNotification } from '@utils';
 import { ChatHeader, MessageList, MessageInput } from '@components/Chat/components';
-import { Notification } from '@components/ui';
 
 export default class Chat extends ElementBuilder {
   private selectedUser: User | null = null;
@@ -15,11 +14,6 @@ export default class Chat extends ElementBuilder {
   constructor() {
     super({ classes: ['chat'] });
 
-    this.setupEventListeners();
-    this.render();
-  }
-
-  private render(): void {
     document.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.key !== 'Enter') return;
 
@@ -32,6 +26,12 @@ export default class Chat extends ElementBuilder {
 
       this.messageInput.submitMessage();
     });
+
+    this.setupEventListeners();
+    this.render();
+  }
+
+  private render(): void {
     this.addChild(this.chatHeader, this.messageList, this.messageInput);
   }
 
@@ -92,8 +92,7 @@ export default class Chat extends ElementBuilder {
 
       if (this.unreadCount > 0) await this.markAsRead();
     } catch (error) {
-      const message = error instanceof Error ? error.message : SERVER_ERRORS.INTERNAL_ERROR;
-      new Notification(message, NOTIFICATION.TYPE.ERROR);
+      showErrorNotification(error);
       this.messageList.clear();
     }
   }
@@ -108,8 +107,7 @@ export default class Chat extends ElementBuilder {
       this.messageList.render(messages, hasUnread);
       this.messageList.updateScroll();
     } catch (error) {
-      const message = error instanceof Error ? error.message : SERVER_ERRORS.INTERNAL_ERROR;
-      new Notification(message, NOTIFICATION.TYPE.ERROR);
+      showErrorNotification(error);
       this.messageList.clear();
     }
   }
@@ -120,8 +118,7 @@ export default class Chat extends ElementBuilder {
     try {
       await wsClient.sendMessage(this.selectedUser.login, text);
     } catch (error) {
-      const message = error instanceof Error ? error.message : SERVER_ERRORS.INTERNAL_ERROR;
-      new Notification(message, NOTIFICATION.TYPE.ERROR);
+      showErrorNotification(error);
     }
   }
 
@@ -136,14 +133,12 @@ export default class Chat extends ElementBuilder {
           try {
             await wsClient.markAsRead(message.id);
           } catch (error) {
-            const message = error instanceof Error ? error.message : SERVER_ERRORS.INTERNAL_ERROR;
-            new Notification(message, NOTIFICATION.TYPE.ERROR);
+            showErrorNotification(error);
           }
         }
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : SERVER_ERRORS.INTERNAL_ERROR;
-      new Notification(message, NOTIFICATION.TYPE.ERROR);
+      showErrorNotification(error);
     }
   }
 }
